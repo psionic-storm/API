@@ -14,6 +14,7 @@ class User {
   }: User): Promise<number> {
     const connection = await pool.getConnection();
     const query = `INSERT INTO user(login_id, nickname, password) VALUES('${loginId}', '${nickname}', '${password}')`;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{ insertId, _ }] = (await connection.query(query)) as any;
     connection.release();
     return insertId;
