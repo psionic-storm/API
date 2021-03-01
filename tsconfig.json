@@ -8,7 +8,8 @@
     "strict": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "outDir": "build"
+    "outDir": "build",
+    "baseUrl": "./src"
   },
   "include": ["src"]
 }
