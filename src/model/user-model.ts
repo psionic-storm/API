@@ -7,7 +7,11 @@ interface User {
 }
 
 class User {
-  static async createUser({ loginId, nickname, password }: User) {
+  static async createUser({
+    loginId,
+    nickname,
+    password,
+  }: User): Promise<number> {
     const connection = await pool.getConnection();
     const query = `INSERT INTO user(login_id, nickname, password) VALUES('${loginId}', '${nickname}', '${password}')`;
     const [{ insertId, _ }] = (await connection.query(query)) as any;
