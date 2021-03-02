@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import User, { UserInfo } from 'model/user-model';
 
-export function createJWT(id: number): string {
-  return jwt.sign({ id }, process.env.JWT_TOKEN || '');
+export function createJWT(loginId: string): string {
+  return jwt.sign({ loginId }, process.env.JWT_TOKEN || '');
 }
 
 export async function verifyJWT(token: string): Promise<UserInfo | null> {

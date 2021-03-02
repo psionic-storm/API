@@ -6,7 +6,7 @@ import { verifyPassword } from 'utils/salt';
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'userId',
+      usernameField: 'loginId',
       passwordField: 'password',
     },
     async (loginId: string, password: string, done) => {

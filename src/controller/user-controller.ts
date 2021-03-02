@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import User from 'model/user-model';
 import { createPasswordHash } from 'utils/salt';
+import { createJWT } from 'utils/jwt';
 
-export async function createUser(req: Request, res: Response): Promise<void> {
+export async function signUpByLoginId(
+  req: Request,
+  res: Response,
+): Promise<void> {
   const { loginId, nickname, password } = req.body;
 
   const user = await User.findByLoginId(loginId);
@@ -21,6 +25,14 @@ export async function createUser(req: Request, res: Response): Promise<void> {
   res.status(201).json(insertId);
 }
 
+// export async function signInByLoginId(
+//   req: Request,
+//   res: Response,
+// ): Promise<void> {
+//   const accessToken = createJWT(req.user['id'] as string);
+//   res.status(200).json({ accessToken });
+// }
+
 // export async function sendAccessToken(
 //   req: Request,
 //   res: Response,
@@ -32,7 +44,5 @@ export async function getCurrentUser(
   req: Request,
   res: Response,
 ): Promise<void> {
-  const { loginId } = req.body;
-  const user = await User.findByLoginId(loginId);
-  res.status(200).json(user);
+  res.json(req.user);
 }
