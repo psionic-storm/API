@@ -15,30 +15,23 @@ export async function signUpByLoginId(
     return;
   }
 
-  const passwordHash = await createPasswordHash(password);
+  const hashedPasswordAndSalt = await createPasswordHash(password);
 
   const insertId = await User.createUser({
     loginId,
     nickname,
-    passwordHash,
+    hashedPasswordAndSalt,
   });
   res.status(201).json(insertId);
 }
 
-// export async function signInByLoginId(
-//   req: Request,
-//   res: Response,
-// ): Promise<void> {
-//   const accessToken = createJWT(req.user['id'] as string);
-//   res.status(200).json({ accessToken });
-// }
-
-// export async function sendAccessToken(
-//   req: Request,
-//   res: Response,
-// ): Promise<void> {
-//   res.status(200).json({ accessToken });
-// }
+export async function signInByLoginId(
+  req: Request,
+  res: Response,
+): Promise<void> {
+  const accessToken = createJWT(req.user['id'] as string);
+  res.status(200).json({ accessToken });
+}
 
 export async function getCurrentUser(
   req: Request,

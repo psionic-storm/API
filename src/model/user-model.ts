@@ -2,14 +2,14 @@ import { queryExecutor } from 'utils/query-executor';
 interface createUserParams {
   loginId: string;
   nickname: string;
-  passwordHash: { password: string; salt: string };
+  hashedPasswordAndSalt: { hashedPassword: string; salt: string };
 }
 
 export interface UserInfo {
   id: number;
   login_id: string;
   nickname: string;
-  password: string;
+  hashedPassword: string;
   salt: string;
 }
 
@@ -17,9 +17,9 @@ class User {
   static async createUser({
     loginId,
     nickname,
-    passwordHash: { password, salt },
+    hashedPasswordAndSalt: { hashedPassword, salt },
   }: createUserParams): Promise<number> {
-    const query = `INSERT INTO user(login_id, nickname, password, salt) VALUES('${loginId}', '${nickname}', '${password}', '${salt}')`;
+    const query = `INSERT INTO user(login_id, nickname, hashed_password, salt) VALUES('${loginId}', '${nickname}', '${hashedPassword}', '${salt}')`;
     return await queryExecutor(query);
   }
 
@@ -30,7 +30,7 @@ class User {
   }
 
   static async findByLoginId(loginId: string): Promise<UserInfo> {
-    const query = `SELECT id, login_id, nickname FROM user WHERE login_id='${loginId}'`;
+    const query = `SELECT * FROM user WHERE login_id='${loginId}'`;
     const user: UserInfo[] = await queryExecutor(query);
     return user[0];
   }

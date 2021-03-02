@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { getCurrentUser, signUpByLoginId } from 'controller/user-controller';
 import { validateBody } from 'middlewares/validate-body';
 import { decodeJWT } from 'middlewares/decode-jwt';
+import passport from 'utils/passport';
 
 const userRouter = Router();
 
@@ -10,7 +11,7 @@ type SignUpUserBody = {
   password: string;
 };
 
-userRouter.get('/', decodeJWT, getCurrentUser);
+type SignInUserBody = SignUpUserBody;
 
 userRouter.post(
   '/signUp',
@@ -18,6 +19,13 @@ userRouter.post(
   signUpByLoginId,
 );
 
-userRouter.post('/signIn', (req, res) => res.json({ ㅗ: 'you' }));
+userRouter.post(
+  '/signIn',
+  validateBody<SignInUserBody>(['loginId', 'password']),
+  passport.authenticate('local', { session: false }),
+  signInByUserId,
+);
+
+userRouter.get('/', decodeJWT, getCurrentUser);
 
 export default userRouter;

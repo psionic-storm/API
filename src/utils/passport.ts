@@ -15,7 +15,7 @@ passport.use(
         if (!user) {
           return done(null, false, { message: 'User Not Found' });
         }
-        if (await verifyPassword(password, user.password, user.salt)) {
+        if (await verifyPassword(password, user.hashedPassword, user.salt)) {
           return done(null, user);
         }
         return done(null, false, { message: 'Invalid Password' });

@@ -9,7 +9,7 @@ function generateRandomHash(length: number): string {
 
 export function createPasswordHash(
   password: string,
-): Promise<{ password: string; salt: string }> {
+): Promise<{ hashedPassword: string; salt: string }> {
   return new Promise((resolve, reject) => {
     try {
       const salt = generateRandomHash(64);
@@ -17,7 +17,7 @@ export function createPasswordHash(
         if (err) {
           reject(err);
         }
-        resolve({ password: key.toString('base64'), salt });
+        resolve({ hashedPassword: key.toString('base64'), salt });
       });
     } catch (e) {
       reject(e);
@@ -27,7 +27,7 @@ export function createPasswordHash(
 
 export function verifyPassword(
   password: string,
-  passwordHash: string,
+  hashedPassword: string,
   salt: string,
 ): Promise<boolean> {
   return new Promise((resolve, reject) => {
@@ -36,7 +36,7 @@ export function verifyPassword(
         if (err) {
           reject(err);
         }
-        if (key.toString('base64') === passwordHash) {
+        if (key.toString('base64') === hashedPassword) {
           resolve(true);
         }
         resolve(false);
