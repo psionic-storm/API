@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { UserRepo } from '../repository/user-repository';
+import User from 'model/user-model';
 import { verifyPassword } from 'utils/salt';
 
 passport.use(
@@ -9,9 +9,9 @@ passport.use(
       usernameField: 'userId',
       passwordField: 'password',
     },
-    async (userId: string, password: string, done) => {
+    async (loginId: string, password: string, done) => {
       try {
-        const user = await UserRepo.findByUserId(userId);
+        const user = await User.findByLoginId(loginId);
         if (!user) {
           return done(null, false, { message: 'User Not Found' });
         }

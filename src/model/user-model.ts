@@ -1,14 +1,16 @@
 import { queryExecutor } from 'utils/query-executor';
-export interface createUserParams {
+interface createUserParams {
   loginId: string;
   nickname: string;
   passwordHash: { password: string; salt: string };
 }
 
-export interface PublicUserInfo {
+export interface UserInfo {
   id: number;
   login_id: string;
   nickname: string;
+  password: string;
+  salt: string;
 }
 
 class User {
@@ -21,15 +23,15 @@ class User {
     return await queryExecutor(query);
   }
 
-  static async findById(id: number): Promise<PublicUserInfo> {
+  static async findById(id: number): Promise<UserInfo> {
     const query = `SELECT * FROM user WHERE id=${id}`;
-    const user: PublicUserInfo[] = await queryExecutor(query);
+    const user: UserInfo[] = await queryExecutor(query);
     return user[0];
   }
 
-  static async findByLoginId(loginId: number): Promise<PublicUserInfo> {
+  static async findByLoginId(loginId: string): Promise<UserInfo> {
     const query = `SELECT id, login_id, nickname FROM user WHERE login_id='${loginId}'`;
-    const user: PublicUserInfo[] = await queryExecutor(query);
+    const user: UserInfo[] = await queryExecutor(query);
     return user[0];
   }
 }
