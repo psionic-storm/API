@@ -1,4 +1,3 @@
-import { pool } from 'connection/connection';
 import { queryExecutor } from 'utils/query-executor';
 
 interface User {
