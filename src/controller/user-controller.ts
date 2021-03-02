@@ -2,7 +2,7 @@ import User from 'model/user-model';
 import { Request, Response } from 'express';
 import { createPasswordHash } from 'utils/salt';
 
-export async function createUser(req: Request, res: Response): Promise<any> {
+export async function createUser(req: Request, res: Response): Promise<void> {
   const { loginId, nickname, password } = req.body;
 
   const user = await User.getUserByLoginId(loginId);
@@ -21,7 +21,10 @@ export async function createUser(req: Request, res: Response): Promise<any> {
   res.status(201).json(insertId);
 }
 
-export async function getCurrentUser(req: Request, res: Response) {
+export async function getCurrentUser(
+  req: Request,
+  res: Response,
+): Promise<void> {
   const { loginId } = req.body;
   const user = await User.getUserByLoginId(loginId);
   res.status(200).json(user);
