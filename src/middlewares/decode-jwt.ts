@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyJWT } from '../utils/jwt';
-import { AuthenticateError } from '../errors/authenticate-error';
+import { verifyJWT } from 'Utils/jwt';
+import { AuthenticateError } from 'Errors/authenticate-error';
 
 export const TOKEN_KEY = 'authorization';
 

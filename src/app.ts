@@ -3,8 +3,8 @@ dotenv.config();
 import express from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
-import router from './routes';
-import { errorHandler } from 'middlewares/error-handler';
+import router from 'Routes/';
+import { errorHandler } from 'Middlewares/error-handler';
 
 const PORT = process.env.PORT || 4000;
 const app = express();

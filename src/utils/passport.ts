@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from 'model/user-model';
-import { verifyPassword } from 'utils/salt';
+import User from 'Model/user-model';
+import { verifyPassword } from 'Utils/salt';
 
 passport.use(
   new LocalStrategy(

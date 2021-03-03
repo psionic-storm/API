@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User, { PublicUserInfo } from 'model/user-model';
+import User, { PublicUserInfo } from 'Model/user-model';
 
 export function createJWT(loginId: string): string {
   return jwt.sign({ loginId }, process.env.JWT_TOKEN || '');

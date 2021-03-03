@@ -3,10 +3,10 @@ import {
   getCurrentUser,
   signUpByLoginId,
   signInByLoginId,
-} from 'controller/user-controller';
-import { validateBody } from 'middlewares/validate-body';
-import { decodeJWT } from 'middlewares/decode-jwt';
-import passport from 'utils/passport';
+} from 'Controller/user-controller';
+import { validateBody } from 'Middlewares/validate-body';
+import { decodeJWT } from 'Middlewares/decode-jwt';
+import passport from 'Utils/passport';
 
 const userRouter = Router();
 

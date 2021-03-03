@@ -1,4 +1,4 @@
-import { queryExecutor } from 'utils/query-executor';
+import { queryExecutor } from 'Utils/query-executor';
 interface createUserParams {
   loginId: string;
   nickname: string;

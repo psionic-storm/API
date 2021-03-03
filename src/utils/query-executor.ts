@@ -1,6 +1,6 @@
-import { pool } from 'connection/connection';
-import { databaseErrorHandler } from 'utils/error-handler';
-import { promiseHandler } from 'utils/promise-handler';
+import { pool } from 'Connection/connection';
+import { databaseErrorHandler } from 'Utils/error-handler';
+import { promiseHandler } from 'Utils/promise-handler';
 
 export async function queryExecutor(query: string): Promise<any> {
   const connection = await pool.getConnection();

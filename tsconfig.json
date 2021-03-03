@@ -9,7 +9,16 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "outDir": "build",
-    "baseUrl": "./src"
+    "baseUrl": ".",
+    "paths": {
+      "Utils*": ["src/utils*"],
+      "Routes*": ["src/routes*"],
+      "Model*": ["src/model*"],
+      "Middlewares*": ["src/middlewares*"],
+      "Errors*": ["src/errors*"],
+      "Controller*": ["src/controller*"],
+      "Connection*": ["src/connection*"]
+    }
   },
   "include": ["src"]
 }

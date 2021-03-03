@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import User from 'model/user-model';
-import { createPasswordHash } from 'utils/salt';
-import { createJWT } from 'utils/jwt';
+import User from 'Model/user-model';
+import { createPasswordHash } from 'Utils/salt';
+import { createJWT } from 'Utils/jwt';
 
 export async function signUpByLoginId(
   req: Request,

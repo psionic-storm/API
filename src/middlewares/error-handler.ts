@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
-import { CustomError } from 'errors/custom-error';
+import { CustomError } from 'Errors/custom-error';
 
 export function errorHandler(
   err: Error,

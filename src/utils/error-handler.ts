@@ -1,4 +1,4 @@
-import { DatabaseError } from 'errors/database-error';
+import { DatabaseError } from 'Errors/database-error';
 
 export function databaseErrorHandler(error: string): void {
   if (error) {
