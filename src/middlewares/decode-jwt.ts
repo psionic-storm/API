@@ -13,6 +13,7 @@ export async function decodeJWT(
     next(new AuthenticateError());
   }
   const token = (req.headers[TOKEN_KEY] as string).split(' ')[1];
+  console.log(token);
   const user = await verifyJWT(token as string);
   req.user = user as Express.User;
   next();

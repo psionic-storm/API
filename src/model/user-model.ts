@@ -25,7 +25,7 @@ class User {
     nickname,
     hashedPasswordAndSalt: { hashedPassword, salt },
   }: createUserParams): Promise<number> {
-    const query = `INSERT INTO user(login_id, nickname, hashed_password, salt) VALUES('${loginId}', '${nickname}', '${hashedPassword}', '${salt}')`;
+    const query = `INSERT INTO user(login_id, nickname, hashed_password, salt, created_at) VALUES('${loginId}', '${nickname}', '${hashedPassword}', '${salt}', NOW())`;
     return await queryExecutor(query);
   }
 
@@ -34,6 +34,7 @@ class User {
   ): Promise<PublicUserInfo> {
     const query = `SELECT id, login_id, nickname FROM user WHERE login_id='${loginId}'`;
     const user: PublicUserInfo[] = await queryExecutor(query);
+    console.log(user);
     return user[0];
   }
 

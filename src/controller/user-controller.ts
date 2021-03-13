@@ -29,8 +29,8 @@ export async function signInByLoginId(
   req: Request,
   res: Response,
 ): Promise<void> {
-  const { id }: any = req.user;
-  const accessToken = createJWT(id);
+  const { login_id }: any = req.user;
+  const accessToken = createJWT(login_id);
   res.status(200).json({ accessToken });
 }
 

@@ -10,6 +10,7 @@ export async function verifyJWT(token: string): Promise<PublicUserInfo | null> {
   if (!verifyResult) {
     return null;
   }
+  console.log({ verifyResult });
 
   const { loginId } = verifyResult;
   return await User.findPublicUserInfoByLoginId(loginId);
