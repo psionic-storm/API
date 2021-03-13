@@ -34,7 +34,6 @@ class User {
   ): Promise<PublicUserInfo> {
     const query = `SELECT id, login_id, nickname FROM user WHERE login_id='${loginId}'`;
     const user: PublicUserInfo[] = await queryExecutor(query);
-    console.log(user);
     return user[0];
   }
 

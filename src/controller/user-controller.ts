@@ -38,6 +38,5 @@ export async function getCurrentUser(
   req: Request,
   res: Response,
 ): Promise<void> {
-  console.log(req.user);
   res.json(req.user);
 }
