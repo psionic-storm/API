@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getAllReviews, getAllQuotes } from 'src/service/square-service';
+import SquareService from 'src/service/square-service';
 
 const squareRouter = Router();
-squareRouter.get('/reviews', getAllReviews);
-squareRouter.get('/quotes', getAllQuotes);
+squareRouter.get('/reviews', SquareService.getAllReviews);
+squareRouter.get('/quotes', SquareService.getAllQuotes);
 
 export default squareRouter;
