@@ -1,12 +1,8 @@
 import { Router } from 'express';
-import {
-  getCurrentUser,
-  signUpByLoginId,
-  signInByLoginId,
-} from 'Controller/user-controller';
-import { validateBody } from 'Middlewares/validate-body';
+import { getAllReviews, getAllQuotes } from 'src/service/square-service';
 
 const squareRouter = Router();
-squareRouter.get('/', getCurrentUser);
+squareRouter.get('/reviews', getAllReviews);
+squareRouter.get('/quotes', getAllQuotes);
 
 export default squareRouter;

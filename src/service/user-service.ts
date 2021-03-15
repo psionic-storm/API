@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from 'Model/user-model';
+import UserRepo from 'Model/user-model';
 import { createPasswordHash } from 'Utils/salt';
 import { createJWT } from 'Utils/jwt';
 
@@ -9,7 +9,7 @@ export async function signUpByLoginId(
 ): Promise<void> {
   const { loginId, nickname, password } = req.body;
 
-  const user = await User.findByLoginId(loginId);
+  const user = await UserRepo.findByLoginId(loginId);
   if (user) {
     res.status(409).json({ message: '이미 있는 아이디' });
     return;
@@ -17,7 +17,7 @@ export async function signUpByLoginId(
 
   const hashedPasswordAndSalt = await createPasswordHash(password);
 
-  const insertId = await User.createUser({
+  const insertId = await UserRepo.createUser({
     loginId,
     nickname,
     hashedPasswordAndSalt,

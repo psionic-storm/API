@@ -3,7 +3,7 @@ import {
   getCurrentUser,
   signUpByLoginId,
   signInByLoginId,
-} from 'Controller/user-controller';
+} from 'src/service/user-service';
 import { validateBody } from 'Middlewares/validate-body';
 import { decodeJWT } from 'Middlewares/decode-jwt';
 import passport from 'Utils/passport';
