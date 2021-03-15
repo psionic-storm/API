@@ -1,10 +1,19 @@
 import { Router } from 'express';
 import SpaceService from 'Service/space-service';
+import { validateBody } from 'Middlewares/validate-body';
 
 const spaceRouter = Router();
 
+export interface UpdateSpaceBody {
+  name: string;
+}
+
 spaceRouter.get('/:spaceId', SpaceService.getSpace);
-// spaceRouter.patch('/:spaceId', SpaceService.updateSpace);
+spaceRouter.patch(
+  '/:spaceId',
+  validateBody<UpdateSpaceBody>(['name']),
+  SpaceService.updateSpace,
+);
 
 // spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 // spaceRouter.post('/:spaceId/book', SpaceService.addBook);

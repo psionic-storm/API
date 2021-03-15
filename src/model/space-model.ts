@@ -1,4 +1,5 @@
 import { queryExecutor } from 'Utils/query-executor';
+import { UpdateSpaceBody } from 'Routes/space-routes';
 
 export interface Space {
   id: number;
@@ -52,11 +53,18 @@ class SpaceRepo {
     return result;
   }
 
-  // static async updateSpace(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async updateSpace(spaceId: number, { name }: UpdateSpaceBody): Promise<any> {
+    const query = `
+      UPDATE
+        space
+      SET 
+        name='${name}'
+      WHERE 
+        id=${spaceId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async findOneBook(): Promise<> {
   //   const query = ``;

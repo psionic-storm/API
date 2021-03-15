@@ -11,10 +11,15 @@ class SpaceService {
     res.status(200).json(space);
   }
 
-  // static async updateSpace(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.updateSpace();
-  //   res.status(200).json(result);
-  // }
+  static async updateSpace(req: Request, res: Response): Promise<void> {
+    const { spaceId } = req.params;
+    const { name } = req.body;
+    const { changedRows } = await SpaceRepo.updateSpace(Number(spaceId), { name });
+    if (changedRows > 0) {
+      res.status(200).json({ message: 'modified successfully' });
+    }
+    res.status(200).json({ message: 'modified successfully, but nothing changed' });
+  }
 
   // static async getBook(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.findOneBook();

@@ -11,7 +11,7 @@ export async function queryExecutor(query: string): Promise<any> {
   const [result, _] = queryResult;
   connection.release();
 
-  if (/^insert/i.test(query)) {
+  if (/^insert/i.test(query.trimStart())) {
     return result.insertId;
   }
 
