@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import SpaceRepo from 'Model/space-model';
-import { Space, Book } from 'Model/space-model';
 
 class SpaceService {
   static async getSpace(req: Request, res: Response): Promise<void> {
     const { spaceId } = req.params;
-    const space: Space = await SpaceRepo.findOneSpace(Number(spaceId));
-    const books: Book[] = await SpaceRepo.findBooksInSpace(Number(spaceId));
+    const space = await SpaceRepo.findOneSpace(Number(spaceId));
+    const books = await SpaceRepo.findAllBooksInSpace(Number(spaceId));
     space.books = books;
     res.status(200).json(space);
   }
@@ -21,10 +20,16 @@ class SpaceService {
     res.status(200).json({ message: 'modified successfully, but nothing changed' });
   }
 
-  // static async getBook(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.findOneBook();
-  //   res.status(200).json(result);
-  // }
+  static async getBook(req: Request, res: Response): Promise<void> {
+    const { bookId } = req.params;
+    const book = await SpaceRepo.findOneBook(Number(bookId));
+    const reviews = await SpaceRepo.findAllReviewsInBook(Number(bookId));
+    const quotes = await SpaceRepo.findAllQuotesInBook(Number(bookId));
+    console.log(reviews);
+    book.reviews = reviews;
+    book.quotes = quotes;
+    res.status(200).json(book);
+  }
 
   // static async addBook(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.createBook();

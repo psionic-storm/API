@@ -1,5 +1,6 @@
 import { queryExecutor } from 'Utils/query-executor';
 import { UpdateSpaceBody } from 'Routes/space-routes';
+import { Quote, Review } from './square-model';
 
 export interface Space {
   id: number;
@@ -14,6 +15,8 @@ export interface Book {
   title: string;
   author: string;
   description: string;
+  reviews?: Review[];
+  quotes?: Quote[];
 }
 
 class SpaceRepo {
@@ -37,7 +40,7 @@ class SpaceRepo {
     return result[0];
   }
 
-  static async findBooksInSpace(spaceId: number): Promise<Book[]> {
+  static async findAllBooksInSpace(spaceId: number): Promise<Book[]> {
     const query = `
       SELECT
         id, 
@@ -66,11 +69,99 @@ class SpaceRepo {
     return result;
   }
 
-  // static async findOneBook(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async findOneBook(bookId: number): Promise<Book> {
+    const query = `
+      SELECT
+        id, 
+        title, 
+        author, 
+        description
+      FROM
+        book
+      WHERE 
+        book.id=${bookId}
+  `;
+    const result = await queryExecutor(query);
+    return result[0];
+  }
+
+  static async findAllReviewsInBook(bookId: number): Promise<Review[]> {
+    const query = `
+      SELECT
+        review.id id, 
+        review.title title, 
+        review.content content, 
+        user.nickname reviewer, 
+        review.created_at created_at, 
+        review.updated_at updated_at, 
+        book.title book_title, 
+        book.author book_author, 
+        salon.name salon, 
+        space.name space 
+      FROM 
+        review 
+      JOIN 
+        book 
+      ON 
+        review.book_id=book.id 
+      JOIN 
+        user 
+      ON 
+        review.user_id=user.id 
+      LEFT JOIN
+        salon 
+      ON 
+        book.salon_id=salon.id 
+      LEFT JOIN 
+        space 
+      ON 
+        book.space_id=space.id
+      WHERE
+        review.book_id=${bookId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
+
+  static async findAllQuotesInBook(bookId: number): Promise<Quote[]> {
+    const query = `
+      SELECT
+        quote.id id, 
+        quote.content content, 
+        quote.page page, 
+        user.nickname quoter, 
+        quote.created_at created_at, 
+        quote.updated_at updated_at, 
+        book.title book_title, 
+        book.author book_author, 
+        salon.name salon, 
+        space.name space 
+      FROM 
+        quote 
+      JOIN 
+        book 
+      ON 
+        quote.book_id=book.id 
+      JOIN 
+        user 
+      ON 
+        quote.user_id=user.id 
+      LEFT JOIN
+        salon 
+      ON 
+        book.salon_id=salon.id 
+      LEFT JOIN 
+        space 
+      ON 
+        book.space_id=space.id
+      WHERE
+        quote.book_id=${bookId}
+  `;
+    const quotes = await queryExecutor(query);
+    return quotes;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async createBook(): Promise<> {
   //   const query = ``;

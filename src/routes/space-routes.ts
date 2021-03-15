@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import SpaceService from 'Service/space-service';
 import { validateBody } from 'Middlewares/validate-body';
+import { decodeJWT } from 'Middlewares/decode-jwt';
 
 const spaceRouter = Router();
 
@@ -11,11 +12,12 @@ export interface UpdateSpaceBody {
 spaceRouter.get('/:spaceId', SpaceService.getSpace);
 spaceRouter.patch(
   '/:spaceId',
+  decodeJWT,
   validateBody<UpdateSpaceBody>(['name']),
   SpaceService.updateSpace,
 );
 
-// spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
+spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 // spaceRouter.post('/:spaceId/book', SpaceService.addBook);
 // spaceRouter.delete('/:spaceId/book/:bookId', SpaceService.deleteBook);
 
