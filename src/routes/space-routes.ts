@@ -17,8 +17,19 @@ spaceRouter.patch(
   SpaceService.updateSpace,
 );
 
+export interface AddBookBody {
+  title: string;
+  author: string;
+  description: string;
+}
+
 spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
-// spaceRouter.post('/:spaceId/book', SpaceService.addBook);
+spaceRouter.post(
+  '/:spaceId/book',
+  decodeJWT,
+  validateBody<AddBookBody>(['title', 'author', 'description']),
+  SpaceService.addBook,
+);
 // spaceRouter.delete('/:spaceId/book/:bookId', SpaceService.deleteBook);
 
 // spaceRouter.post('/:spaceId/book/:bookId/review', SpaceService.addReview);

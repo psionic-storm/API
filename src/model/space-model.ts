@@ -1,5 +1,5 @@
 import { queryExecutor } from 'Utils/query-executor';
-import { UpdateSpaceBody } from 'Routes/space-routes';
+import { AddBookBody, UpdateSpaceBody } from 'Routes/space-routes';
 import { Quote, Review } from './square-model';
 
 export interface Space {
@@ -61,7 +61,8 @@ class SpaceRepo {
       UPDATE
         space
       SET 
-        name='${name}'
+        name='${name}',
+        updated_at=NOW()
       WHERE 
         id=${spaceId}
     `;
@@ -157,17 +158,19 @@ class SpaceRepo {
       WHERE
         quote.book_id=${bookId}
   `;
-    const quotes = await queryExecutor(query);
-    return quotes;
     const result = await queryExecutor(query);
     return result;
   }
 
-  // static async createBook(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async createBook(spaceId: number, { title, author, description }: AddBookBody): Promise<any> {
+    const query = `
+      INSERT INTO
+        book(title, author, description, created_at, space_id)
+      VALUES('${title}', '${author}', '${description}', NOW(), ${spaceId})
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async deleteBook(): Promise<> {
   //   const query = ``;

@@ -11,13 +11,11 @@ class SpaceService {
   }
 
   static async updateSpace(req: Request, res: Response): Promise<void> {
+    console.log(req.user);
     const { spaceId } = req.params;
     const { name } = req.body;
-    const { changedRows } = await SpaceRepo.updateSpace(Number(spaceId), { name });
-    if (changedRows > 0) {
-      res.status(200).json({ message: 'modified successfully' });
-    }
-    res.status(200).json({ message: 'modified successfully, but nothing changed' });
+    await SpaceRepo.updateSpace(Number(spaceId), { name });
+    res.status(200).json({ message: 'modified successfully' });
   }
 
   static async getBook(req: Request, res: Response): Promise<void> {
@@ -31,10 +29,12 @@ class SpaceService {
     res.status(200).json(book);
   }
 
-  // static async addBook(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.createBook();
-  //   res.status(200).json(result);
-  // }
+  static async addBook(req: Request, res: Response): Promise<void> {
+    const { spaceId } = req.params;
+    const { title, author, description } = req.body;
+    const result = await SpaceRepo.createBook(Number(spaceId), { title, author, description });
+    res.status(200).json(result);
+  }
 
   // static async deleteBook(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.deleteBook();
