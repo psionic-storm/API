@@ -37,7 +37,17 @@ class SpaceRepo {
   }
 
   static async findBooksInSpace(spaceId: number): Promise<Book[]> {
-    const query = `SELECT * from book where book.space_id=${spaceId}`;
+    const query = `
+      SELECT
+        id, 
+        title, 
+        author, 
+        description
+      FROM
+        book
+      WHERE 
+        book.space_id=${spaceId}
+    `;
     const result = await queryExecutor(query);
     return result;
   }
