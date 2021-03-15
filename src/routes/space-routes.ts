@@ -1,8 +1,9 @@
 import { Router } from 'express';
+import SpaceService from 'Service/space-service';
 
 const spaceRouter = Router();
 
-spaceRouter.get('/:spaceId', getSpace);
+spaceRouter.get('/:spaceId', spaceService.getSpace);
 spaceRouter.patch('/:spaceId', updateSpace);
 
 spaceRouter.get('/:spaceId/book/:bookId', getSpace);

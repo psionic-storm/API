@@ -16,7 +16,7 @@
       "Model*": ["src/model*"],
       "Middlewares*": ["src/middlewares*"],
       "Errors*": ["src/errors*"],
-      "Controller*": ["src/controller*"],
+      "Service*": ["src/service*"],
       "Connection*": ["src/connection*"]
     }
   },

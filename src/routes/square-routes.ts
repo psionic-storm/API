@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import SquareService from 'src/service/square-service';
+import SquareService from 'Service/square-service';
 
 const squareRouter = Router();
 squareRouter.get('/reviews', SquareService.getAllReviews);
