@@ -162,7 +162,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createBook(spaceId: number, { title, author, description }: AddBookBody): Promise<any> {
+  static async createBook(spaceId: number, { title, author, description }: AddBookBody): Promise<number> {
     const query = `
       INSERT INTO
         book(title, author, description, created_at, space_id)
@@ -172,11 +172,16 @@ class SpaceRepo {
     return result;
   }
 
-  // static async deleteBook(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async deleteBook(bookId: number): Promise<any> {
+    const query = `
+      DELETE FROM
+        book
+      WHERE
+        id=${bookId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async createReview(): Promise<> {
   //   const query = ``;

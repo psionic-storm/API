@@ -30,7 +30,7 @@ spaceRouter.post(
   validateBody<AddBookBody>(['title', 'author', 'description']),
   SpaceService.addBook,
 );
-// spaceRouter.delete('/:spaceId/book/:bookId', SpaceService.deleteBook);
+spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, SpaceService.deleteBook);
 
 // spaceRouter.post('/:spaceId/book/:bookId/review', SpaceService.addReview);
 // spaceRouter.patch('/:spaceId/book/:bookId/review/:reviewId', SpaceService.updateReview);
