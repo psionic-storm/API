@@ -17,7 +17,8 @@
       "Middlewares*": ["src/middlewares*"],
       "Errors*": ["src/errors*"],
       "Service*": ["src/service*"],
-      "Connection*": ["src/connection*"]
+      "Connection*": ["src/connection*"],
+      "Types*": ["src/types*"]
     }
   },
   "include": ["src"]

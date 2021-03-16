@@ -3,19 +3,9 @@ import { getCurrentUser, signUpByLoginId, signInByLoginId } from 'src/service/us
 import { validateBody } from 'Middlewares/validate-body';
 import { decodeJWT } from 'Middlewares/decode-jwt';
 import passport from 'Utils/passport';
+import { SignUpUserBody, SignInUserBody } from 'Types/validate-body';
 
 const userRouter = Router();
-
-interface SignUpUserBody {
-  loginId: string;
-  nickname: string;
-  password: string;
-}
-
-interface SignInUserBody {
-  loginId: string;
-  password: string;
-}
 
 userRouter.post(
   '/signUp',

@@ -3,12 +3,20 @@ import SpaceService from 'Service/space-service';
 import { validateBody } from 'Middlewares/validate-body';
 import { decodeJWT } from 'Middlewares/decode-jwt';
 import { checkPermission } from 'Middlewares/check-permission';
+import {
+  UpdateSpaceBody,
+  AddBookBody,
+  AddReviewBody,
+  UpdateReviewBody,
+  AddReviewCommentBody,
+  UpdateReviewCommentBody,
+  AddQuoteBody,
+  UpdateQuoteBody,
+  AddQuoteCommentBody,
+  UpdateQuoteCommentBody,
+} from 'Types/validate-body';
 
 const spaceRouter = Router();
-
-export interface UpdateSpaceBody {
-  name: string;
-}
 
 spaceRouter.get('/:spaceId', SpaceService.getSpace);
 spaceRouter.patch(
@@ -18,38 +26,6 @@ spaceRouter.patch(
   validateBody<UpdateSpaceBody>(['name']),
   SpaceService.updateSpace,
 );
-
-export interface AddBookBody {
-  title: string;
-  author: string;
-  description: string;
-}
-
-export interface AddReviewBody {
-  title: string;
-  content: string;
-}
-
-export type UpdateReviewBody = AddReviewBody;
-
-export interface AddReviewCommentBody {
-  comment: string;
-}
-
-export type UpdateReviewCommentBody = AddReviewCommentBody;
-
-export interface AddQuoteBody {
-  content: string;
-  page: number;
-}
-
-export type UpdateQuoteBody = AddQuoteBody;
-
-export interface AddQuoteCommentBody {
-  comment: string;
-}
-
-export type UpdateQuoteCommentBody = AddQuoteCommentBody;
 
 spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 spaceRouter.post(
