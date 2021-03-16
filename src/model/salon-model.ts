@@ -128,7 +128,7 @@ class SalonRepo {
   static async findUserBySalonId(salonId: number): Promise<number> {
     const query = `
       SELECT
-        salon.user_id
+        creator_id
       FROM
         salon
       WHERE
@@ -192,7 +192,7 @@ class SalonRepo {
     return result;
   }
 
-  static async updateSalon({ salonId, name }: UpdateSalonParams): Promise<any> {
+  static async updateSalon({ name, salonId }: UpdateSalonParams): Promise<any> {
     const query = `
       UPDATE
         salon

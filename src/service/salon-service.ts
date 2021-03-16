@@ -21,7 +21,6 @@ class SalonService {
   }
 
   static async updateSalon(req: Request, res: Response): Promise<void> {
-    console.log(req.user);
     const salonId = parseInt(req.params.salonId);
     const { name } = req.body;
     await SalonRepo.updateSalon({ salonId, name });

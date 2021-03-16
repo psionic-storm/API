@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import SalonRepo from 'Model/salon-model';
 import SpaceRepo from 'Model/space-model';
 import { JWTKey } from 'Utils/jwt';
 
@@ -62,6 +63,18 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
     const { user_id }: any = await SpaceRepo.findUserBySpaceId(spaceId);
     if (id !== user_id) {
       res.status(401).json({ message: "Permission denied. It's not your space" });
+      return;
+    }
+    next();
+    return;
+  }
+
+  if (req.params.salonId) {
+    const salonId = parseInt(req.params.salonId);
+    const { creator_id }: any = await SalonRepo.findUserBySalonId(salonId);
+    console.log(id);
+    if (id !== creator_id) {
+      res.status(401).json({ message: "Permission denied. It's not a salon you created" });
       return;
     }
     next();
