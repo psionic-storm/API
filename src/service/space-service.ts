@@ -63,12 +63,8 @@ class SpaceService {
 
   static async deleteReview(req: Request, res: Response): Promise<void> {
     const reviewId = parseInt(req.params.reviewId);
-    const { affectedRows } = await SpaceRepo.deleteReview(reviewId);
-    if (affectedRows > 0) {
-      res.status(200).json({ message: 'deleted successfully' });
-      return;
-    }
-    res.status(200).json({ messgage: 'DB: no items to delete' });
+    await SpaceRepo.deleteReview(reviewId);
+    res.status(200).json({ message: 'deleted successfully' });
   }
 
   static async getAllReviewComments(req: Request, res: Response): Promise<void> {
@@ -87,15 +83,18 @@ class SpaceService {
     res.status(200).json(result);
   }
 
-  // static async updateReviewComment(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.updateReviewComment();
-  //   res.status(200).json(result);
-  // }
+  static async updateReviewComment(req: Request, res: Response): Promise<void> {
+    const commentId = parseInt(req.params.commentId);
+    const { comment } = req.body;
+    await SpaceRepo.updateReviewComment({ comment, commentId });
+    res.status(200).json({ message: 'modified successfully' });
+  }
 
-  // static async deleteReviewComment(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.deleteReviewComment();
-  //   res.status(200).json(result);
-  // }
+  static async deleteReviewComment(req: Request, res: Response): Promise<void> {
+    const commentId = parseInt(req.params.commentId);
+    await SpaceRepo.deleteReviewComment(commentId);
+    res.status(200).json({ message: 'deleted successfully' });
+  }
 
   // static async addQuote(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.createQuote();

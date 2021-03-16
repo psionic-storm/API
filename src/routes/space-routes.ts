@@ -36,6 +36,8 @@ export interface addReviewCommentBody {
   comment: string;
 }
 
+export type updateReviewCommentBody = addReviewCommentBody;
+
 spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 spaceRouter.post(
   '/:spaceId/book',
@@ -69,8 +71,19 @@ spaceRouter.post(
   validateBody<addReviewCommentBody>(['comment']),
   SpaceService.addReviewComment,
 );
-// spaceRouter.patch('/:spaceId/book/:bookId/review/:reviewId/comment/:commentId', SpaceService.updateReviewComment);
-// spaceRouter.delete('/:spaceId/book/:bookId/review/:reviewId/comment/:commentId', SpaceService.deleteReviewComment);
+spaceRouter.patch(
+  '/:spaceId/book/:bookId/review/:reviewId/comment/:commentId',
+  decodeJWT,
+  checkPermission,
+  validateBody<updateReviewCommentBody>(['comment']),
+  SpaceService.updateReviewComment,
+);
+spaceRouter.delete(
+  '/:spaceId/book/:bookId/review/:reviewId/comment/:commentId',
+  decodeJWT,
+  checkPermission,
+  SpaceService.deleteReviewComment,
+);
 
 // spaceRouter.post('/:spaceId/book/:bookId/quote', SpaceService.addQuote);
 // spaceRouter.patch('/:spaceId/book/:bookId/quote/:quoteId', SpaceService.updateQuote);

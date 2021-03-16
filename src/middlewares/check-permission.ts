@@ -5,6 +5,21 @@ import { JWTKey } from 'Utils/jwt';
 export async function checkPermission(req: Request, res: Response, next: NextFunction): Promise<void> {
   const { id } = req.user as JWTKey;
 
+  if (req.params.commentId) {
+    const commentId = parseInt(req.params.commentId);
+    const result: any = await SpaceRepo.findUserByCommentId(commentId);
+    if (!result) {
+      res.status(200).json({ message: 'no items to update(delete)' });
+      return;
+    }
+    if (id !== result.user_id) {
+      res.status(401).json({ message: "Permission denied. It's not your review" });
+      return;
+    }
+    next();
+    return;
+  }
+
   if (req.params.reviewId) {
     const reviewId = parseInt(req.params.reviewId);
     const result: any = await SpaceRepo.findUserByReviewId(reviewId);

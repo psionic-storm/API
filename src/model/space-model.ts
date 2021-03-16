@@ -57,6 +57,11 @@ export interface createReviewCommentParams {
   userId: number;
 }
 
+export interface updateReviewCommentParams {
+  comment: string;
+  commentId: number;
+}
+
 class SpaceRepo {
   static async findUserBySpaceId(spaceId: number): Promise<number> {
     const query = `
@@ -313,17 +318,42 @@ class SpaceRepo {
     return result;
   }
 
-  // static async updateReviewComment(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async findUserByCommentId(commentId: number): Promise<number> {
+    const query = `
+      SELECT
+        review_comment.user_id
+      FROM
+        review_comment
+      WHERE
+        review_comment.id=${commentId}
+    `;
+    const result = await queryExecutor(query);
+    return result[0];
+  }
 
-  // static async deleteReviewComment(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async updateReviewComment({ comment, commentId }: updateReviewCommentParams): Promise<any> {
+    const query = `
+      UPDATE
+        review_comment
+      SET 
+        comment='${comment}',
+        updated_at=NOW()
+      WHERE 
+        id=${commentId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
+
+  static async deleteReviewComment(commentId: number): Promise<any> {
+    const query = `      
+      DELETE FROM
+        review_comment
+      WHERE
+        id=${commentId}`;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async createQuote(): Promise<> {
   //   const query = ``;
