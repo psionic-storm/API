@@ -1,5 +1,4 @@
 import { queryExecutor } from 'Utils/query-executor';
-import { AddBookBody, UpdateSpaceBody } from 'Routes/space-routes';
 import { Quote, Review } from './square-model';
 
 export interface Space {
@@ -35,6 +34,12 @@ export interface createReviewParams {
   content: string;
   bookId: number;
   userId: number;
+}
+
+export interface UpdateReviewParams {
+  title: string;
+  content: string;
+  reviewId: number;
 }
 
 class SpaceRepo {
@@ -224,11 +229,33 @@ class SpaceRepo {
     return result;
   }
 
-  // static async updateReview(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async findUserByReviewId(reviewId: number): Promise<number> {
+    const query = `
+      SELECT
+        review.user_id
+      FROM
+        review
+      WHERE
+        review.id=${reviewId}
+    `;
+    const result = await queryExecutor(query);
+    return result[0];
+  }
+
+  static async updateReview({ title, content, reviewId }: UpdateReviewParams): Promise<any> {
+    const query = `
+      UPDATE
+        review
+      SET 
+        title='${title}',
+        content='${content}',
+        updated_at=NOW()
+      WHERE 
+        id=${reviewId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async deleteReview(): Promise<> {
   //   const query = ``;

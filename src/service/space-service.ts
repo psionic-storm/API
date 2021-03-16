@@ -54,10 +54,12 @@ class SpaceService {
     res.status(200).json(result);
   }
 
-  // static async updateReview(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.updateReview();
-  //   res.status(200).json(result);
-  // }
+  static async updateReview(req: Request, res: Response): Promise<void> {
+    const reviewId = parseInt(req.params.reviewId);
+    const { title, content } = req.body;
+    await SpaceRepo.updateReview({ title, content, reviewId });
+    res.status(200).json({ message: 'modified successfully' });
+  }
 
   // static async deleteReview(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.deleteReview();
