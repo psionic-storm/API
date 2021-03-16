@@ -14,7 +14,7 @@ class SpaceService {
     console.log(req.user);
     const spaceId = parseInt(req.params.spaceId);
     const { name } = req.body;
-    await SpaceRepo.updateSpace(spaceId, { name });
+    await SpaceRepo.updateSpace({ spaceId, name });
     res.status(200).json({ message: 'modified successfully' });
   }
 
@@ -32,7 +32,7 @@ class SpaceService {
   static async addBook(req: Request, res: Response): Promise<void> {
     const spaceId = parseInt(req.params.spaceId);
     const { title, author, description } = req.body;
-    const result = await SpaceRepo.createBook(spaceId, { title, author, description });
+    const result = await SpaceRepo.createBook({ title, author, description, spaceId });
     res.status(200).json(result);
   }
 

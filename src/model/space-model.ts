@@ -19,6 +19,24 @@ export interface Book {
   quotes?: Quote[];
 }
 
+export interface updateSpaceParams {
+  name: string;
+  spaceId: number;
+}
+export interface createBookParams {
+  title: string;
+  author: string;
+  description: string;
+  spaceId: number;
+}
+
+export interface createReviewParams {
+  title: string;
+  content: string;
+  bookId: number;
+  userId: number;
+}
+
 class SpaceRepo {
   static async findUserBySpaceId(spaceId: number): Promise<number> {
     const query = `
@@ -69,7 +87,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async updateSpace(spaceId: number, { name }: UpdateSpaceBody): Promise<any> {
+  static async updateSpace({ spaceId, name }: updateSpaceParams): Promise<any> {
     const query = `
       UPDATE
         space
@@ -175,7 +193,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createBook(spaceId: number, { title, author, description }: AddBookBody): Promise<number> {
+  static async createBook({ title, author, description, spaceId }: createBookParams): Promise<number> {
     const query = `
       INSERT INTO
         book(title, author, description, created_at, space_id)
@@ -196,7 +214,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createReview({ title, content, bookId, userId }: any): Promise<any> {
+  static async createReview({ title, content, bookId, userId }: createReviewParams): Promise<any> {
     const query = `
       INSERT INTO 
         review(title, content, created_at, updated_at, book_id, user_id)
