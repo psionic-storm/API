@@ -78,7 +78,6 @@ class SpaceService {
     const bookId = parseInt(req.params.bookId);
     const userId = parseInt((req.user as any).id);
     const { comment } = req.body;
-
     const result = await SpaceRepo.createReviewComment({ comment, reviewId, bookId, userId });
     res.status(200).json(result);
   }
@@ -96,40 +95,54 @@ class SpaceService {
     res.status(200).json({ message: 'deleted successfully' });
   }
 
-  // static async addQuote(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.createQuote();
-  //   res.status(200).json(result);
-  // }
+  static async addQuote(req: Request, res: Response): Promise<void> {
+    const bookId = parseInt(req.params.bookId);
+    const userId = parseInt((req.user as any).id);
+    const { content, page } = req.body;
+    const result = await SpaceRepo.createQuote({ content, page, bookId, userId });
+    res.status(200).json(result);
+  }
 
-  // static async updateQuote(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.updateQuote();
-  //   res.status(200).json(result);
-  // }
+  static async updateQuote(req: Request, res: Response): Promise<void> {
+    const quoteId = parseInt(req.params.quoteId);
+    const { content, page } = req.body;
+    await SpaceRepo.updateQuote({ content, page, quoteId });
+    res.status(200).json({ message: 'modified successfully' });
+  }
 
-  // static async deleteQuote(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.deleteQuote();
-  //   res.status(200).json(result);
-  // }
+  static async deleteQuote(req: Request, res: Response): Promise<void> {
+    const quoteId = parseInt(req.params.quoteId);
+    await SpaceRepo.deleteQuote(quoteId);
+    res.status(200).json({ message: 'deleted successfully' });
+  }
 
-  // static async getAllQuoteComments(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.findAllQuoteComments();
-  //   res.status(200).json(result);
-  // }
+  static async getAllQuoteComments(req: Request, res: Response): Promise<void> {
+    const quoteId = parseInt(req.params.quoteId);
+    const result = await SpaceRepo.findAllQuoteComments(quoteId);
+    res.status(200).json(result);
+  }
 
-  // static async addQuoteComment(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.createQuoteComment();
-  //   res.status(200).json(result);
-  // }
+  static async addQuoteComment(req: Request, res: Response): Promise<void> {
+    const quoteId = parseInt(req.params.quoteId);
+    const bookId = parseInt(req.params.bookId);
+    const userId = parseInt((req.user as any).id);
+    const { comment } = req.body;
+    const result = await SpaceRepo.createQuoteComment({ comment, quoteId, bookId, userId });
+    res.status(200).json(result);
+  }
 
-  // static async updateQuoteComment(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.updateQuoteComment();
-  //   res.status(200).json(result);
-  // }
+  static async updateQuoteComment(req: Request, res: Response): Promise<void> {
+    const commentId = parseInt(req.params.commentId);
+    const { comment } = req.body;
+    await SpaceRepo.updateQuoteComment({ comment, commentId });
+    res.status(200).json({ message: 'modified successfully' });
+  }
 
-  // static async deleteQuoteComment(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.deleteQuoteComment();
-  //   res.status(200).json(result);
-  // }
+  static async deleteQuoteComment(req: Request, res: Response): Promise<void> {
+    const quoteId = parseInt(req.params.quoteId);
+    await SpaceRepo.deleteQuote(quoteId);
+    res.status(200).json({ message: 'deleted successfully' });
+  }
 }
 
 export default SpaceService;
