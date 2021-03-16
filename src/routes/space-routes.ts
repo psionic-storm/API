@@ -30,26 +30,26 @@ export interface AddReviewBody {
   content: string;
 }
 
-export type updateReviewBody = AddReviewBody;
+export type UpdateReviewBody = AddReviewBody;
 
-export interface addReviewCommentBody {
+export interface AddReviewCommentBody {
   comment: string;
 }
 
-export type updateReviewCommentBody = addReviewCommentBody;
+export type UpdateReviewCommentBody = AddReviewCommentBody;
 
 export interface AddQuoteBody {
   content: string;
   page: number;
 }
 
-export type updateQuoteBody = AddQuoteBody;
+export type UpdateQuoteBody = AddQuoteBody;
 
-export interface addQuoteCommentBody {
+export interface AddQuoteCommentBody {
   comment: string;
 }
 
-export type updateQuoteCommentBody = addQuoteCommentBody;
+export type UpdateQuoteCommentBody = AddQuoteCommentBody;
 
 spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 spaceRouter.post(
@@ -72,7 +72,7 @@ spaceRouter.patch(
   '/:spaceId/book/:bookId/review/:reviewId',
   decodeJWT,
   checkPermission,
-  validateBody<updateReviewBody>(['title', 'content']),
+  validateBody<UpdateReviewBody>(['title', 'content']),
   SpaceService.updateReview,
 );
 spaceRouter.delete('/:spaceId/book/:bookId/review/:reviewId', decodeJWT, checkPermission, SpaceService.deleteReview);
@@ -81,14 +81,14 @@ spaceRouter.get('/:spaceId/book/:bookId/review/:reviewId/comment', SpaceService.
 spaceRouter.post(
   '/:spaceId/book/:bookId/review/:reviewId/comment',
   decodeJWT,
-  validateBody<addReviewCommentBody>(['comment']),
+  validateBody<AddReviewCommentBody>(['comment']),
   SpaceService.addReviewComment,
 );
 spaceRouter.patch(
   '/:spaceId/book/:bookId/review/:reviewId/comment/:commentId',
   decodeJWT,
   checkPermission,
-  validateBody<updateReviewCommentBody>(['comment']),
+  validateBody<UpdateReviewCommentBody>(['comment']),
   SpaceService.updateReviewComment,
 );
 spaceRouter.delete(
@@ -109,7 +109,7 @@ spaceRouter.patch(
   '/:spaceId/book/:bookId/quote/:quoteId',
   decodeJWT,
   checkPermission,
-  validateBody<updateQuoteBody>(['content', 'page']),
+  validateBody<UpdateQuoteBody>(['content', 'page']),
   SpaceService.updateQuote,
 );
 spaceRouter.delete('/:spaceId/book/:bookId/quote/:quoteId', decodeJWT, checkPermission, SpaceService.deleteQuote);
@@ -118,14 +118,14 @@ spaceRouter.get('/:spaceId/book/:bookId/quote/:quoteId/comment', SpaceService.ge
 spaceRouter.post(
   '/:spaceId/book/:bookId/quote/:quoteId/comment',
   decodeJWT,
-  validateBody<addQuoteCommentBody>(['comment']),
+  validateBody<AddQuoteCommentBody>(['comment']),
   SpaceService.addQuoteComment,
 );
 spaceRouter.patch(
   '/:spaceId/book/:bookId/quote/:quoteId/comment/:commentId',
   decodeJWT,
   checkPermission,
-  validateBody<updateQuoteCommentBody>(['comment']),
+  validateBody<UpdateQuoteCommentBody>(['comment']),
   SpaceService.updateQuoteComment,
 );
 spaceRouter.delete(

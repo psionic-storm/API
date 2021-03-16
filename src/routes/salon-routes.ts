@@ -34,26 +34,26 @@ export interface AddReviewBody {
   content: string;
 }
 
-export type updateReviewBody = AddReviewBody;
+export type UpdateReviewBody = AddReviewBody;
 
-export interface addReviewCommentBody {
+export interface AddReviewCommentBody {
   comment: string;
 }
 
-export type updateReviewCommentBody = addReviewCommentBody;
+export type UpdateReviewCommentBody = AddReviewCommentBody;
 
 export interface AddQuoteBody {
   content: string;
   page: number;
 }
 
-export type updateQuoteBody = AddQuoteBody;
+export type UpdateQuoteBody = AddQuoteBody;
 
-export interface addQuoteCommentBody {
+export interface AddQuoteCommentBody {
   comment: string;
 }
 
-export type updateQuoteCommentBody = addQuoteCommentBody;
+export type UpdateQuoteCommentBody = AddQuoteCommentBody;
 
 salonRouter.get('/:salonId/book/:bookId', SalonService.getBook);
 salonRouter.post(
@@ -76,7 +76,7 @@ salonRouter.patch(
   '/:salonId/book/:bookId/review/:reviewId',
   decodeJWT,
   checkPermission,
-  validateBody<updateReviewBody>(['title', 'content']),
+  validateBody<UpdateReviewBody>(['title', 'content']),
   SalonService.updateReview,
 );
 salonRouter.delete('/:salonId/book/:bookId/review/:reviewId', decodeJWT, checkPermission, SalonService.deleteReview);
@@ -85,14 +85,14 @@ salonRouter.get('/:salonId/book/:bookId/review/:reviewId/comment', SalonService.
 salonRouter.post(
   '/:salonId/book/:bookId/review/:reviewId/comment',
   decodeJWT,
-  validateBody<addReviewCommentBody>(['comment']),
+  validateBody<AddReviewCommentBody>(['comment']),
   SalonService.addReviewComment,
 );
 salonRouter.patch(
   '/:salonId/book/:bookId/review/:reviewId/comment/:commentId',
   decodeJWT,
   checkPermission,
-  validateBody<updateReviewCommentBody>(['comment']),
+  validateBody<UpdateReviewCommentBody>(['comment']),
   SalonService.updateReviewComment,
 );
 salonRouter.delete(
@@ -113,7 +113,7 @@ salonRouter.patch(
   '/:salonId/book/:bookId/quote/:quoteId',
   decodeJWT,
   checkPermission,
-  validateBody<updateQuoteBody>(['content', 'page']),
+  validateBody<UpdateQuoteBody>(['content', 'page']),
   SalonService.updateQuote,
 );
 salonRouter.delete('/:salonId/book/:bookId/quote/:quoteId', decodeJWT, checkPermission, SalonService.deleteQuote);
@@ -122,14 +122,14 @@ salonRouter.get('/:salonId/book/:bookId/quote/:quoteId/comment', SalonService.ge
 salonRouter.post(
   '/:salonId/book/:bookId/quote/:quoteId/comment',
   decodeJWT,
-  validateBody<addQuoteCommentBody>(['comment']),
+  validateBody<AddQuoteCommentBody>(['comment']),
   SalonService.addQuoteComment,
 );
 salonRouter.patch(
   '/:salonId/book/:bookId/quote/:quoteId/comment/:commentId',
   decodeJWT,
   checkPermission,
-  validateBody<updateQuoteCommentBody>(['comment']),
+  validateBody<UpdateQuoteCommentBody>(['comment']),
   SalonService.updateQuoteComment,
 );
 salonRouter.delete(
