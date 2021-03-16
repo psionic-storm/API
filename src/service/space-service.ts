@@ -140,7 +140,7 @@ class SpaceService {
 
   static async deleteQuoteComment(req: Request, res: Response): Promise<void> {
     const quoteId = parseInt(req.params.quoteId);
-    await SpaceRepo.deleteQuote(quoteId);
+    await SpaceRepo.deleteQuoteComment(quoteId);
     res.status(200).json({ message: 'deleted successfully' });
   }
 }

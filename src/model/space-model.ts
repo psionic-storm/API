@@ -18,7 +18,7 @@ export interface Book {
   quotes?: Quote[];
 }
 
-export interface ReviewComment {
+export interface Comment {
   id: number;
   comment: string;
   created_at: string;
@@ -58,6 +58,31 @@ export interface createReviewCommentParams {
 }
 
 export interface updateReviewCommentParams {
+  comment: string;
+  commentId: number;
+}
+
+export interface createQuoteParams {
+  content: string;
+  page: number;
+  bookId: number;
+  userId: number;
+}
+
+export interface UpdateQuoteParams {
+  content: string;
+  page: number;
+  quoteId: number;
+}
+
+export interface createQuoteCommentParams {
+  comment: string;
+  quoteId: number;
+  bookId: number;
+  userId: number;
+}
+
+export interface updateQuoteCommentParams {
   comment: string;
   commentId: number;
 }
@@ -287,7 +312,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async findAllReviewComments(reviewId: number): Promise<ReviewComment[]> {
+  static async findAllReviewComments(reviewId: number): Promise<Comment[]> {
     const query = `
       SELECT 
         review_comment.id id,
@@ -381,47 +406,95 @@ class SpaceRepo {
     return result[0];
   }
 
-  // static async createQuote(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async createQuote({ content, page, bookId, userId }: createQuoteParams): Promise<any> {
+    const query = `
+      INSERT INTO 
+        quote(content, page, created_at, updated_at, book_id, user_id)
+      VALUES('${content}', '${page}', NOW(), NOW(), ${bookId}, ${userId})
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
-  // static async updateQuote(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async updateQuote({ content, page, quoteId }: UpdateQuoteParams): Promise<any> {
+    const query = `
+      UPDATE
+        quote
+      SET 
+        content='${content}',
+        page='${page}',
+        updated_at=NOW()
+      WHERE 
+        id=${quoteId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
-  // static async deleteQuote(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async deleteQuote(quoteId: number): Promise<any> {
+    const query = `      
+      DELETE FROM
+        quote
+      WHERE
+        id=${quoteId}`;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
-  // static async findAllQuoteComments(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async findAllQuoteComments(quoteId: number): Promise<Comment[]> {
+    const query = `
+      SELECT 
+        quote_comment.id id,
+        quote_comment.comment comment,
+        quote_comment.created_at created_at,
+        quote_comment.updated_at updated_at,
+        user.nickname commenter
+      FROM
+        quote_comment
+      JOIN
+        user 
+      ON 
+        quote_comment.user_id=user.id
+      WHERE
+        quote_comment.quote_id=${quoteId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
-  // static async createQuoteComment(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async createQuoteComment({ comment, quoteId, bookId, userId }: createQuoteCommentParams): Promise<number> {
+    const query = `
+      INSERT INTO 
+        quote_comment(comment, created_at, updated_at, quote_id, quote_book_id, user_id)
+      VALUES('${comment}', NOW(), NOW(), ${quoteId}, ${bookId}, ${userId})
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
-  // static async updateQuoteComment(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async updateQuoteComment({ comment, commentId }: updateQuoteCommentParams): Promise<any> {
+    const query = `
+      UPDATE
+        quote_comment
+      SET 
+        comment='${comment}',
+        updated_at=NOW()
+      WHERE 
+        id=${commentId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
-  // static async deleteQuoteComment(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async deleteQuoteComment(commentId: number): Promise<any> {
+    const query = `      
+      DELETE FROM
+        quote_comment
+      WHERE
+        id=${commentId}`;
+    const result = await queryExecutor(query);
+    return result;
+  }
 }
 
 export default SpaceRepo;
