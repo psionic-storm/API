@@ -7,7 +7,7 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
   const spaceId = parseInt(req.params.spaceId);
   const { user_id }: any = await SpaceRepo.findUserBySpaceId(spaceId);
   if (id !== user_id) {
-    res.status(401).json({ message: "Permission denied. It's not your post" });
+    res.status(401).json({ message: "Permission denied. It's not your space" });
     return;
   }
   next();

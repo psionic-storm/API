@@ -29,10 +29,11 @@ spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 spaceRouter.post(
   '/:spaceId/book',
   decodeJWT,
+  checkPermission,
   validateBody<AddBookBody>(['title', 'author', 'description']),
   SpaceService.addBook,
 );
-spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, SpaceService.deleteBook);
+spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, checkPermission, SpaceService.deleteBook);
 
 // spaceRouter.post('/:spaceId/book/:bookId/review', SpaceService.addReview);
 // spaceRouter.patch('/:spaceId/book/:bookId/review/:reviewId', SpaceService.updateReview);
