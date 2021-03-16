@@ -38,6 +38,19 @@ export interface addReviewCommentBody {
 
 export type updateReviewCommentBody = addReviewCommentBody;
 
+export interface AddQuoteBody {
+  content: string;
+  page: number;
+}
+
+export type updateQuoteBody = AddQuoteBody;
+
+export interface addQuoteCommentBody {
+  comment: string;
+}
+
+export type updateQuoteCommentBody = addQuoteCommentBody;
+
 spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 spaceRouter.post(
   '/:spaceId/book',
@@ -85,13 +98,41 @@ spaceRouter.delete(
   SpaceService.deleteReviewComment,
 );
 
-// spaceRouter.post('/:spaceId/book/:bookId/quote', SpaceService.addQuote);
-// spaceRouter.patch('/:spaceId/book/:bookId/quote/:quoteId', SpaceService.updateQuote);
-// spaceRouter.delete('/:spaceId/book/:bookId/quote/:quoteId', SpaceService.deleteQuote);
+spaceRouter.post(
+  '/:spaceId/book/:bookId/quote',
+  decodeJWT,
+  checkPermission,
+  validateBody<AddQuoteBody>(['content', 'page']),
+  SpaceService.addQuote,
+);
+spaceRouter.patch(
+  '/:spaceId/book/:bookId/quote/:quoteId',
+  decodeJWT,
+  checkPermission,
+  validateBody<updateQuoteBody>(['content', 'page']),
+  SpaceService.updateQuote,
+);
+spaceRouter.delete('/:spaceId/book/:bookId/quote/:quoteId', decodeJWT, checkPermission, SpaceService.deleteQuote);
 
-// spaceRouter.get('/:spaceId/book/:bookId/quote/:quoteId/comment', SpaceService.getAllQuoteComments);
-// spaceRouter.post('/:spaceId/book/:bookId/quote/:quoteId/comment', SpaceService.addQuoteComment);
-// spaceRouter.patch('/:spaceId/book/:bookId/quote/:quoteId/comment/:commentId', SpaceService.updateQuoteComment);
-// spaceRouter.delete('/:spaceId/book/:bookId/quote/:quoteId/comment/:commentId', SpaceService.deleteQuoteComment);
+spaceRouter.get('/:spaceId/book/:bookId/quote/:quoteId/comment', SpaceService.getAllQuoteComments);
+spaceRouter.post(
+  '/:spaceId/book/:bookId/quote/:quoteId/comment',
+  decodeJWT,
+  validateBody<addQuoteCommentBody>(['comment']),
+  SpaceService.addQuoteComment,
+);
+spaceRouter.patch(
+  '/:spaceId/book/:bookId/quote/:quoteId/comment/:commentId',
+  decodeJWT,
+  checkPermission,
+  validateBody<updateQuoteCommentBody>(['comment']),
+  SpaceService.updateQuoteComment,
+);
+spaceRouter.delete(
+  '/:spaceId/book/:bookId/quote/:quoteId/comment/:commentId',
+  decodeJWT,
+  checkPermission,
+  SpaceService.deleteQuoteComment,
+);
 
 export default spaceRouter;
