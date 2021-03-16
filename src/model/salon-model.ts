@@ -1,108 +1,19 @@
 import { queryExecutor } from 'Utils/query-executor';
-import { Quote, Review } from './square-model';
-
-export interface Salon {
-  id: number;
-  name: string;
-  owner_id: string;
-  owner_nickname: string;
-  books?: Book[];
-  participants?: Participant[];
-}
-
-export interface Participant {
-  id: number;
-  login_id: string;
-  nickname: string;
-}
-
-export interface Book {
-  id: number;
-  title: string;
-  author: string;
-  description: string;
-  reviews?: Review[];
-  quotes?: Quote[];
-}
-
-export interface Comment {
-  id: number;
-  comment: string;
-  created_at: string;
-  updated_at: string;
-  commenter: string;
-}
-
-export interface CreateSalonParams {
-  name: string;
-  userId: number;
-}
-
-export interface AddSalonMemberParams {
-  salonId: number;
-  userId: number;
-}
-
-export interface UpdateSalonParams {
-  name: string;
-  salonId: number;
-}
-export interface CreateBookParams {
-  title: string;
-  author: string;
-  description: string;
-  salonId: number;
-}
-
-export interface CreateReviewParams {
-  title: string;
-  content: string;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateReviewParams {
-  title: string;
-  content: string;
-  reviewId: number;
-}
-
-export interface CreateReviewCommentParams {
-  comment: string;
-  reviewId: number;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateReviewCommentParams {
-  comment: string;
-  commentId: number;
-}
-
-export interface CreateQuoteParams {
-  content: string;
-  page: number;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateQuoteParams {
-  content: string;
-  page: number;
-  quoteId: number;
-}
-
-export interface CreateQuoteCommentParams {
-  comment: string;
-  quoteId: number;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateQuoteCommentParams {
-  comment: string;
-  commentId: number;
-}
+import {
+  CreateSalonParams,
+  AddSalonMemberParams,
+  UpdateSalonParams,
+  CreateBookParams,
+  CreateReviewParams,
+  UpdateReviewParams,
+  CreateReviewCommentParams,
+  UpdateReviewCommentParams,
+  CreateQuoteParams,
+  UpdateQuoteParams,
+  CreateQuoteCommentParams,
+  UpdateQuoteCommentParams,
+} from 'Types/repository-param';
+import { Salon, Participant, Book, Review, Quote, Comment } from 'Types/repository-return';
 
 class SalonRepo {
   static async createSalon({ name, userId }: CreateSalonParams): Promise<any> {

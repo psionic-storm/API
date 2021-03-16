@@ -1,9 +1,5 @@
 import { queryExecutor } from 'Utils/query-executor';
-interface createUserParams {
-  loginId: string;
-  nickname: string;
-  hashedPasswordAndSalt: { hashedPassword: string; salt: string };
-}
+import { CreateUserParams } from 'Types/repository-param';
 
 export interface UserInfo {
   id: number;
@@ -24,7 +20,7 @@ class UserRepo {
     loginId,
     nickname,
     hashedPasswordAndSalt: { hashedPassword, salt },
-  }: createUserParams): Promise<number> {
+  }: CreateUserParams): Promise<number> {
     const query = `
       INSERT INTO 
         user(login_id, nickname, hashed_password, salt, created_at) 
@@ -33,9 +29,7 @@ class UserRepo {
     return await queryExecutor(query);
   }
 
-  static async findPublicUserInfoByLoginId(
-    loginId: string,
-  ): Promise<PublicUserInfo> {
+  static async findPublicUserInfoByLoginId(loginId: string): Promise<PublicUserInfo> {
     const query = `
       SELECT 
         id, login_id, nickname 

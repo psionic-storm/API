@@ -1,91 +1,17 @@
 import { queryExecutor } from 'Utils/query-executor';
-import { Quote, Review } from './square-model';
-
-export interface Space {
-  id: number;
-  name: string;
-  owner_id: string;
-  owner_nickname: string;
-  books?: Book[];
-}
-
-export interface Book {
-  id: number;
-  title: string;
-  author: string;
-  description: string;
-  reviews?: Review[];
-  quotes?: Quote[];
-}
-
-export interface Comment {
-  id: number;
-  comment: string;
-  created_at: string;
-  updated_at: string;
-  commenter: string;
-}
-
-export interface UpdateSapceParams {
-  name: string;
-  spaceId: number;
-}
-export interface CreateBookParams {
-  title: string;
-  author: string;
-  description: string;
-  spaceId: number;
-}
-
-export interface CreateReviewParams {
-  title: string;
-  content: string;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateReviewParams {
-  title: string;
-  content: string;
-  reviewId: number;
-}
-
-export interface CreateReviewCommentParams {
-  comment: string;
-  reviewId: number;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateReviewCommentParams {
-  comment: string;
-  commentId: number;
-}
-
-export interface CreateQuoteParams {
-  content: string;
-  page: number;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateQuoteParams {
-  content: string;
-  page: number;
-  quoteId: number;
-}
-
-export interface CreateQuoteCommentParams {
-  comment: string;
-  quoteId: number;
-  bookId: number;
-  userId: number;
-}
-
-export interface UpdateQuoteCommentParams {
-  comment: string;
-  commentId: number;
-}
+import {
+  UpdateSpaceParams,
+  CreateBookParams,
+  CreateReviewParams,
+  UpdateReviewParams,
+  CreateReviewCommentParams,
+  UpdateReviewCommentParams,
+  CreateQuoteParams,
+  UpdateQuoteParams,
+  CreateQuoteCommentParams,
+  UpdateQuoteCommentParams,
+} from 'Types/repository-param';
+import { Space, Book, Review, Quote, Comment } from 'Types/repository-return';
 
 class SpaceRepo {
   static async findUserBySpaceId(spaceId: number): Promise<number> {
@@ -137,7 +63,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async updateSpace({ spaceId, name }: UpdateSapceParams): Promise<any> {
+  static async updateSpace({ spaceId, name }: UpdateSpaceParams): Promise<any> {
     const query = `
       UPDATE
         space

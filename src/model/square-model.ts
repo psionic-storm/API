@@ -1,30 +1,6 @@
 import { queryExecutor } from 'Utils/query-executor';
+import { Review, Quote } from 'Types/repository-return';
 
-export interface Review {
-  id: number;
-  title: string;
-  content: string;
-  reviewer: string;
-  created_at: string;
-  updated_at: string;
-  book_title: string;
-  book_author: string;
-  salon: string | null;
-  space: string | null;
-}
-
-export interface Quote {
-  id: number;
-  content: string;
-  page: string;
-  quoter: string;
-  created_at: string;
-  updated_at: string;
-  book_title: string;
-  book_author: string;
-  salon: string | null;
-  space: string | null;
-}
 class SquareRepo {
   static async findAllReviews(): Promise<Review[]> {
     const query = `
