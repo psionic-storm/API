@@ -13,8 +13,10 @@ class SalonService {
   static async getSalon(req: Request, res: Response): Promise<void> {
     const salonId = parseInt(req.params.salonId);
     const salon = await SalonRepo.findOneSalon(salonId);
+    const participants = await SalonRepo.findAllUsersInSalon(salonId);
     const books = await SalonRepo.findAllBooksInSalon(salonId);
     salon.books = books;
+    salon.participants = participants;
     res.status(200).json(salon);
   }
 

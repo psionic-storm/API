@@ -7,6 +7,13 @@ export interface Salon {
   owner_id: string;
   owner_nickname: string;
   books?: Book[];
+  participants?: Participant[];
+}
+
+export interface Participant {
+  id: number;
+  login_id: string;
+  nickname: string;
 }
 
 export interface Book {
@@ -133,22 +140,40 @@ class SalonRepo {
 
   static async findOneSalon(salonId: number): Promise<Salon> {
     const query = `
-      SELECT 
-        salon.id id, 
-        salon.name name, 
-        user.id owner_id, 
-        user.nickname owner_nickname 
+      SELECT
+        salon.id id,
+        salon.name name,
+        user.nickname creator_nickname
       FROM 
         salon
-      JOIN 
-        salon_has_user
+      JOIN
+        user
       ON
-        salon.id=salon_has_user.id
+        creator_id=user.id
       WHERE
         salon.id=${salonId}
     `;
     const result = await queryExecutor(query);
     return result[0];
+  }
+
+  static async findAllUsersInSalon(salonId: number): Promise<Participant[]> {
+    const query = `
+      SELECT
+        user.id id,
+        user.login_id login_id, 
+        user.nickname nickname
+      FROM
+        salon_has_user
+      JOIN
+        user
+      ON
+        salon_has_user.user_id=user.id
+      WHERE 
+        salon_has_user.salon_id=${salonId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
   }
 
   static async findAllBooksInSalon(salonId: number): Promise<Book[]> {
