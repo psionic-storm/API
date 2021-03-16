@@ -1,16 +1,20 @@
 import jwt from 'jsonwebtoken';
 import UserRepo, { PublicUserInfo } from 'Model/user-model';
 
-export function createJWT(loginId: string): string {
-  return jwt.sign({ loginId }, process.env.JWT_TOKEN || '');
+interface JWTKey {
+  id: number;
+  loginId: string;
+  nickname: string;
 }
 
-export async function verifyJWT(token: string): Promise<PublicUserInfo | null> {
-  const verifyResult: any = jwt.verify(token, process.env.JWT_TOKEN || '');
+export function createJWT({ id, loginId, nickname }: JWTKey): string {
+  return jwt.sign({ id, loginId, nickname }, process.env.JWT_SECRET || '');
+}
+
+export async function verifyJWT(token: string): Promise<JWTKey | null> {
+  const verifyResult: any = jwt.verify(token, process.env.JWT_SECRET || '');
   if (!verifyResult) {
     return null;
   }
-
-  const { loginId } = verifyResult;
-  return await UserRepo.findPublicUserInfoByLoginId(loginId);
+  return verifyResult;
 }

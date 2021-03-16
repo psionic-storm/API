@@ -4,11 +4,7 @@ import { AuthenticateError } from 'Errors/authenticate-error';
 
 export const TOKEN_KEY = 'authorization';
 
-export async function decodeJWT(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> {
+export async function decodeJWT(req: Request, res: Response, next: NextFunction): Promise<void> {
   if (!req.headers[TOKEN_KEY]) {
     next(new AuthenticateError());
   }
