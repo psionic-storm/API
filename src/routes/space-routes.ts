@@ -25,6 +25,13 @@ export interface AddBookBody {
   description: string;
 }
 
+export interface AddReviewBody {
+  title: string;
+  content: string;
+}
+
+export type updateReviewBody = AddReviewBody;
+
 spaceRouter.get('/:spaceId/book/:bookId', SpaceService.getBook);
 spaceRouter.post(
   '/:spaceId/book',
@@ -35,8 +42,20 @@ spaceRouter.post(
 );
 spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, checkPermission, SpaceService.deleteBook);
 
-spaceRouter.post('/:spaceId/book/:bookId/review', decodeJWT, checkPermission, SpaceService.addReview);
-spaceRouter.patch('/:spaceId/book/:bookId/review/:reviewId', decodeJWT, checkPermission, SpaceService.updateReview);
+spaceRouter.post(
+  '/:spaceId/book/:bookId/review',
+  decodeJWT,
+  checkPermission,
+  validateBody<AddReviewBody>(['title', 'content']),
+  SpaceService.addReview,
+);
+spaceRouter.patch(
+  '/:spaceId/book/:bookId/review/:reviewId',
+  decodeJWT,
+  checkPermission,
+  validateBody<updateReviewBody>(['title', 'content']),
+  SpaceService.updateReview,
+);
 spaceRouter.delete('/:spaceId/book/:bookId/review/:reviewId', decodeJWT, checkPermission, SpaceService.deleteReview);
 
 spaceRouter.get('/:spaceId/book/:bookId/review/:reviewId/comment', SpaceService.getAllReviewComments);
