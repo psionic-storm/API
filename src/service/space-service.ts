@@ -3,26 +3,26 @@ import SpaceRepo from 'Model/space-model';
 
 class SpaceService {
   static async getSpace(req: Request, res: Response): Promise<void> {
-    const { spaceId } = req.params;
-    const space = await SpaceRepo.findOneSpace(Number(spaceId));
-    const books = await SpaceRepo.findAllBooksInSpace(Number(spaceId));
+    const spaceId = parseInt(req.params.spaceId);
+    const space = await SpaceRepo.findOneSpace(spaceId);
+    const books = await SpaceRepo.findAllBooksInSpace(spaceId);
     space.books = books;
     res.status(200).json(space);
   }
 
   static async updateSpace(req: Request, res: Response): Promise<void> {
     console.log(req.user);
-    const { spaceId } = req.params;
+    const spaceId = parseInt(req.params.spaceId);
     const { name } = req.body;
-    await SpaceRepo.updateSpace(Number(spaceId), { name });
+    await SpaceRepo.updateSpace(spaceId, { name });
     res.status(200).json({ message: 'modified successfully' });
   }
 
   static async getBook(req: Request, res: Response): Promise<void> {
-    const { bookId } = req.params;
-    const book = await SpaceRepo.findOneBook(Number(bookId));
-    const reviews = await SpaceRepo.findAllReviewsInBook(Number(bookId));
-    const quotes = await SpaceRepo.findAllQuotesInBook(Number(bookId));
+    const bookId = parseInt(req.params.bookId);
+    const book = await SpaceRepo.findOneBook(bookId);
+    const reviews = await SpaceRepo.findAllReviewsInBook(bookId);
+    const quotes = await SpaceRepo.findAllQuotesInBook(bookId);
     console.log(reviews);
     book.reviews = reviews;
     book.quotes = quotes;
@@ -30,15 +30,15 @@ class SpaceService {
   }
 
   static async addBook(req: Request, res: Response): Promise<void> {
-    const { spaceId } = req.params;
+    const spaceId = parseInt(req.params.spaceId);
     const { title, author, description } = req.body;
-    const result = await SpaceRepo.createBook(Number(spaceId), { title, author, description });
+    const result = await SpaceRepo.createBook(spaceId, { title, author, description });
     res.status(200).json(result);
   }
 
   static async deleteBook(req: Request, res: Response): Promise<void> {
-    const { bookId } = req.params;
-    const { affectedRows } = await SpaceRepo.deleteBook(Number(bookId));
+    const bookId = parseInt(req.params.bookId);
+    const { affectedRows } = await SpaceRepo.deleteBook(bookId);
     if (affectedRows > 0) {
       res.status(200).json({ message: 'deleted successfully' });
       return;
