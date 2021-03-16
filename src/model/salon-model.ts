@@ -26,18 +26,28 @@ export interface Comment {
   commenter: string;
 }
 
-export interface updateSalonParams {
+export interface CreateSalonParams {
+  name: string;
+  userId: number;
+}
+
+export interface AddSalonMemberParams {
+  salonId: number;
+  userId: number;
+}
+
+export interface UpdateSalonParams {
   name: string;
   salonId: number;
 }
-export interface createBookParams {
+export interface CreateBookParams {
   title: string;
   author: string;
   description: string;
   salonId: number;
 }
 
-export interface createReviewParams {
+export interface CreateReviewParams {
   title: string;
   content: string;
   bookId: number;
@@ -50,19 +60,19 @@ export interface UpdateReviewParams {
   reviewId: number;
 }
 
-export interface createReviewCommentParams {
+export interface CreateReviewCommentParams {
   comment: string;
   reviewId: number;
   bookId: number;
   userId: number;
 }
 
-export interface updateReviewCommentParams {
+export interface UpdateReviewCommentParams {
   comment: string;
   commentId: number;
 }
 
-export interface createQuoteParams {
+export interface CreateQuoteParams {
   content: string;
   page: number;
   bookId: number;
@@ -75,19 +85,39 @@ export interface UpdateQuoteParams {
   quoteId: number;
 }
 
-export interface createQuoteCommentParams {
+export interface CreateQuoteCommentParams {
   comment: string;
   quoteId: number;
   bookId: number;
   userId: number;
 }
 
-export interface updateQuoteCommentParams {
+export interface UpdateQuoteCommentParams {
   comment: string;
   commentId: number;
 }
 
 class SalonRepo {
+  static async createSalon({ name, userId }: CreateSalonParams): Promise<any> {
+    const query = `
+      INSERT INTO
+        salon(name, creator_id, created_at, updated_at)
+      VALUES('${name}', ${userId}, NOW(), NOW())
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
+
+  static async addSalonMember({ salonId, userId }: AddSalonMemberParams): Promise<any> {
+    const query = `
+      INSERT INTO
+        salon_has_user(salon_id, user_id, created_at, updated_at)
+      VALUES(${salonId}, ${userId}, NOW(), NOW())
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
+
   static async findUserBySalonId(salonId: number): Promise<number> {
     const query = `
       SELECT
@@ -101,7 +131,7 @@ class SalonRepo {
     return result[0];
   }
 
-  static async findOnesalon(salonId: number): Promise<Salon> {
+  static async findOneSalon(salonId: number): Promise<Salon> {
     const query = `
       SELECT 
         salon.id id, 
@@ -111,9 +141,9 @@ class SalonRepo {
       FROM 
         salon
       JOIN 
-        user 
+        salon_has_user
       ON
-        salon.user_id=user.id
+        salon.id=salon_has_user.id
       WHERE
         salon.id=${salonId}
     `;
@@ -137,7 +167,7 @@ class SalonRepo {
     return result;
   }
 
-  static async updateSalon({ salonId, name }: updateSalonParams): Promise<any> {
+  static async updateSalon({ salonId, name }: UpdateSalonParams): Promise<any> {
     const query = `
       UPDATE
         salon
@@ -243,7 +273,7 @@ class SalonRepo {
     return result;
   }
 
-  static async createBook({ title, author, description, salonId }: createBookParams): Promise<number> {
+  static async createBook({ title, author, description, salonId }: CreateBookParams): Promise<number> {
     const query = `
       INSERT INTO
         book(title, author, description, created_at, salon_id)
@@ -264,7 +294,7 @@ class SalonRepo {
     return result;
   }
 
-  static async createReview({ title, content, bookId, userId }: createReviewParams): Promise<any> {
+  static async createReview({ title, content, bookId, userId }: CreateReviewParams): Promise<any> {
     const query = `
       INSERT INTO 
         review(title, content, created_at, updated_at, book_id, user_id)
@@ -333,7 +363,7 @@ class SalonRepo {
     return result;
   }
 
-  static async createReviewComment({ comment, reviewId, bookId, userId }: createReviewCommentParams): Promise<number> {
+  static async createReviewComment({ comment, reviewId, bookId, userId }: CreateReviewCommentParams): Promise<number> {
     const query = `
       INSERT INTO 
         review_comment(comment, created_at, updated_at, review_id, review_book_id, user_id)
@@ -356,7 +386,7 @@ class SalonRepo {
     return result[0];
   }
 
-  static async updateReviewComment({ comment, commentId }: updateReviewCommentParams): Promise<any> {
+  static async updateReviewComment({ comment, commentId }: UpdateReviewCommentParams): Promise<any> {
     const query = `
       UPDATE
         review_comment
@@ -406,7 +436,7 @@ class SalonRepo {
     return result[0];
   }
 
-  static async createQuote({ content, page, bookId, userId }: createQuoteParams): Promise<any> {
+  static async createQuote({ content, page, bookId, userId }: CreateQuoteParams): Promise<any> {
     const query = `
       INSERT INTO 
         quote(content, page, created_at, updated_at, book_id, user_id)
@@ -462,7 +492,7 @@ class SalonRepo {
     return result;
   }
 
-  static async createQuoteComment({ comment, quoteId, bookId, userId }: createQuoteCommentParams): Promise<number> {
+  static async createQuoteComment({ comment, quoteId, bookId, userId }: CreateQuoteCommentParams): Promise<number> {
     const query = `
       INSERT INTO 
         quote_comment(comment, created_at, updated_at, quote_id, quote_book_id, user_id)
@@ -472,7 +502,7 @@ class SalonRepo {
     return result;
   }
 
-  static async updateQuoteComment({ comment, commentId }: updateQuoteCommentParams): Promise<any> {
+  static async updateQuoteComment({ comment, commentId }: UpdateQuoteCommentParams): Promise<any> {
     const query = `
       UPDATE
         quote_comment

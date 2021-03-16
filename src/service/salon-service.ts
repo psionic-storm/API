@@ -2,9 +2,17 @@ import { Request, Response } from 'express';
 import SalonRepo from 'Model/salon-model';
 
 class SalonService {
+  static async addSalon(req: Request, res: Response): Promise<void> {
+    const { name } = req.body;
+    const userId = parseInt((req.user as any).id);
+    const salonId = await SalonRepo.createSalon({ name, userId });
+    await SalonRepo.addSalonMember({ salonId, userId });
+    res.status(200).json(salonId);
+  }
+
   static async getSalon(req: Request, res: Response): Promise<void> {
     const salonId = parseInt(req.params.salonId);
-    const salon = await SalonRepo.findOnesalon(salonId);
+    const salon = await SalonRepo.findOneSalon(salonId);
     const books = await SalonRepo.findAllBooksInSalon(salonId);
     salon.books = books;
     res.status(200).json(salon);

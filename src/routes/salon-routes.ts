@@ -6,9 +6,13 @@ import { checkPermission } from 'Middlewares/check-permission';
 
 const salonRouter = Router();
 
-export interface UpdateSalonBody {
+export interface CreateSalonBody {
   name: string;
 }
+
+export type UpdateSalonBody = CreateSalonBody;
+
+salonRouter.post('/', decodeJWT, SalonService.addSalon);
 
 salonRouter.get('/:salonId', SalonService.getSalon);
 salonRouter.patch(

@@ -26,18 +26,18 @@ export interface Comment {
   commenter: string;
 }
 
-export interface updateSpaceParams {
+export interface UpdateSapceParams {
   name: string;
   spaceId: number;
 }
-export interface createBookParams {
+export interface CreateBookParams {
   title: string;
   author: string;
   description: string;
   spaceId: number;
 }
 
-export interface createReviewParams {
+export interface CreateReviewParams {
   title: string;
   content: string;
   bookId: number;
@@ -50,19 +50,19 @@ export interface UpdateReviewParams {
   reviewId: number;
 }
 
-export interface createReviewCommentParams {
+export interface CreateReviewCommentParams {
   comment: string;
   reviewId: number;
   bookId: number;
   userId: number;
 }
 
-export interface updateReviewCommentParams {
+export interface UpdateReviewCommentParams {
   comment: string;
   commentId: number;
 }
 
-export interface createQuoteParams {
+export interface CreateQuoteParams {
   content: string;
   page: number;
   bookId: number;
@@ -75,14 +75,14 @@ export interface UpdateQuoteParams {
   quoteId: number;
 }
 
-export interface createQuoteCommentParams {
+export interface CreateQuoteCommentParams {
   comment: string;
   quoteId: number;
   bookId: number;
   userId: number;
 }
 
-export interface updateQuoteCommentParams {
+export interface UpdateQuoteCommentParams {
   comment: string;
   commentId: number;
 }
@@ -137,7 +137,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async updateSpace({ spaceId, name }: updateSpaceParams): Promise<any> {
+  static async updateSpace({ spaceId, name }: UpdateSapceParams): Promise<any> {
     const query = `
       UPDATE
         space
@@ -243,7 +243,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createBook({ title, author, description, spaceId }: createBookParams): Promise<number> {
+  static async createBook({ title, author, description, spaceId }: CreateBookParams): Promise<number> {
     const query = `
       INSERT INTO
         book(title, author, description, created_at, space_id)
@@ -264,7 +264,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createReview({ title, content, bookId, userId }: createReviewParams): Promise<any> {
+  static async createReview({ title, content, bookId, userId }: CreateReviewParams): Promise<any> {
     const query = `
       INSERT INTO 
         review(title, content, created_at, updated_at, book_id, user_id)
@@ -333,7 +333,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createReviewComment({ comment, reviewId, bookId, userId }: createReviewCommentParams): Promise<number> {
+  static async createReviewComment({ comment, reviewId, bookId, userId }: CreateReviewCommentParams): Promise<number> {
     const query = `
       INSERT INTO 
         review_comment(comment, created_at, updated_at, review_id, review_book_id, user_id)
@@ -356,7 +356,7 @@ class SpaceRepo {
     return result[0];
   }
 
-  static async updateReviewComment({ comment, commentId }: updateReviewCommentParams): Promise<any> {
+  static async updateReviewComment({ comment, commentId }: UpdateReviewCommentParams): Promise<any> {
     const query = `
       UPDATE
         review_comment
@@ -406,7 +406,7 @@ class SpaceRepo {
     return result[0];
   }
 
-  static async createQuote({ content, page, bookId, userId }: createQuoteParams): Promise<any> {
+  static async createQuote({ content, page, bookId, userId }: CreateQuoteParams): Promise<any> {
     const query = `
       INSERT INTO 
         quote(content, page, created_at, updated_at, book_id, user_id)
@@ -462,7 +462,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async createQuoteComment({ comment, quoteId, bookId, userId }: createQuoteCommentParams): Promise<number> {
+  static async createQuoteComment({ comment, quoteId, bookId, userId }: CreateQuoteCommentParams): Promise<number> {
     const query = `
       INSERT INTO 
         quote_comment(comment, created_at, updated_at, quote_id, quote_book_id, user_id)
@@ -472,7 +472,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async updateQuoteComment({ comment, commentId }: updateQuoteCommentParams): Promise<any> {
+  static async updateQuoteComment({ comment, commentId }: UpdateQuoteCommentParams): Promise<any> {
     const query = `
       UPDATE
         quote_comment
