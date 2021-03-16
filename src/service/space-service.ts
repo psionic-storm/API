@@ -139,8 +139,8 @@ class SpaceService {
   }
 
   static async deleteQuoteComment(req: Request, res: Response): Promise<void> {
-    const quoteId = parseInt(req.params.quoteId);
-    await SpaceRepo.deleteQuoteComment(quoteId);
+    const commentId = parseInt(req.params.commentId);
+    await SpaceRepo.deleteQuoteComment(commentId);
     res.status(200).json({ message: 'deleted successfully' });
   }
 }
