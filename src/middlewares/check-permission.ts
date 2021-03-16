@@ -7,8 +7,12 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
 
   if (req.params.reviewId) {
     const reviewId = parseInt(req.params.reviewId);
-    const { user_id }: any = await SpaceRepo.findUserByReviewId(reviewId);
-    if (id !== user_id) {
+    const result: any = await SpaceRepo.findUserByReviewId(reviewId);
+    if (!result) {
+      res.status(200).json({ message: 'no items to delete' });
+      return;
+    }
+    if (id !== result.user_id) {
       res.status(401).json({ message: "Permission denied. It's not your review" });
       return;
     }

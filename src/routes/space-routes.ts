@@ -37,7 +37,7 @@ spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, checkPermission, SpaceSe
 
 spaceRouter.post('/:spaceId/book/:bookId/review', decodeJWT, checkPermission, SpaceService.addReview);
 spaceRouter.patch('/:spaceId/book/:bookId/review/:reviewId', decodeJWT, checkPermission, SpaceService.updateReview);
-// spaceRouter.delete('/:spaceId/book/:bookId/review/:reviewId', SpaceService.deleteReview);
+spaceRouter.delete('/:spaceId/book/:bookId/review/:reviewId', decodeJWT, checkPermission, SpaceService.deleteReview);
 
 // spaceRouter.get('/:spaceId/book/:bookId/review/:reviewId/comment', SpaceService.getAllReviewComments);
 // spaceRouter.post('/:spaceId/book/:bookId/review/:reviewId/comment', SpaceService.addReviewComment);

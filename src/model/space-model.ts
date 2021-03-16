@@ -257,11 +257,15 @@ class SpaceRepo {
     return result;
   }
 
-  // static async deleteReview(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async deleteReview(reviewId: number): Promise<any> {
+    const query = `      
+      DELETE FROM
+        review
+      WHERE
+        id=${reviewId}`;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async findAllReviewComments(): Promise<> {
   //   const query = ``;

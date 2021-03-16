@@ -61,10 +61,15 @@ class SpaceService {
     res.status(200).json({ message: 'modified successfully' });
   }
 
-  // static async deleteReview(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.deleteReview();
-  //   res.status(200).json(result);
-  // }
+  static async deleteReview(req: Request, res: Response): Promise<void> {
+    const reviewId = parseInt(req.params.reviewId);
+    const { affectedRows } = await SpaceRepo.deleteReview(reviewId);
+    if (affectedRows > 0) {
+      res.status(200).json({ message: 'deleted successfully' });
+      return;
+    }
+    res.status(200).json({ messgage: 'no items to delete' });
+  }
 
   // static async getAllReviewComments(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.findAllReviewComments();
