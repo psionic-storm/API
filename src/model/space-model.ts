@@ -249,7 +249,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async findUserByReviewId(reviewId: number): Promise<number> {
+  static async findUserByReviewId(reviewId: number): Promise<any> {
     const query = `
       SELECT
         review.user_id
@@ -318,7 +318,7 @@ class SpaceRepo {
     return result;
   }
 
-  static async findUserByCommentId(commentId: number): Promise<number> {
+  static async findUserByReviewCommentId(commentId: number): Promise<any> {
     const query = `
       SELECT
         review_comment.user_id
@@ -353,6 +353,32 @@ class SpaceRepo {
         id=${commentId}`;
     const result = await queryExecutor(query);
     return result;
+  }
+
+  static async findUserByQuoteId(QuoteId: number): Promise<any> {
+    const query = `
+      SELECT
+        quote.user_id
+      FROM
+        quote
+      WHERE
+        quote.id=${QuoteId}
+    `;
+    const result = await queryExecutor(query);
+    return result[0];
+  }
+
+  static async findUserByQuoteCommentId(commentId: number): Promise<any> {
+    const query = `
+      SELECT
+        quote_comment.user_id
+      FROM
+        quote_comment
+      WHERE
+        quote_comment.id=${commentId}
+    `;
+    const result = await queryExecutor(query);
+    return result[0];
   }
 
   // static async createQuote(): Promise<> {

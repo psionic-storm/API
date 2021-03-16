@@ -7,7 +7,14 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
 
   if (req.params.commentId) {
     const commentId = parseInt(req.params.commentId);
-    const result: any = await SpaceRepo.findUserByCommentId(commentId);
+    let result;
+    if (req.params.reviewId) {
+      result = await SpaceRepo.findUserByReviewCommentId(commentId);
+    }
+    if (req.params.quoteId) {
+      result = await SpaceRepo.findUserByQuoteCommentId(commentId);
+    }
+
     if (!result) {
       res.status(200).json({ message: 'no items to update(delete)' });
       return;
@@ -29,6 +36,21 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
     }
     if (id !== result.user_id) {
       res.status(401).json({ message: "Permission denied. It's not your review" });
+      return;
+    }
+    next();
+    return;
+  }
+
+  if (req.params.quoteId) {
+    const quoteId = parseInt(req.params.quoteId);
+    const result: any = await SpaceRepo.findUserByQuoteId(quoteId);
+    if (!result) {
+      res.status(200).json({ message: 'no items to update(delete)' });
+      return;
+    }
+    if (id !== result.user_id) {
+      res.status(401).json({ message: "Permission denied. It's not your quote" });
       return;
     }
     next();
