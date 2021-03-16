@@ -9,7 +9,7 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
     const reviewId = parseInt(req.params.reviewId);
     const result: any = await SpaceRepo.findUserByReviewId(reviewId);
     if (!result) {
-      res.status(200).json({ message: 'no items to delete' });
+      res.status(200).json({ message: 'no items to update(delete)' });
       return;
     }
     if (id !== result.user_id) {

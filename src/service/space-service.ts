@@ -77,10 +77,15 @@ class SpaceService {
     res.status(200).json(result);
   }
 
-  // static async addReviewComment(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.createReviewComment();
-  //   res.status(200).json(result);
-  // }
+  static async addReviewComment(req: Request, res: Response): Promise<void> {
+    const reviewId = parseInt(req.params.reviewId);
+    const bookId = parseInt(req.params.bookId);
+    const userId = parseInt((req.user as any).id);
+    const { comment } = req.body;
+
+    const result = await SpaceRepo.createReviewComment({ comment, reviewId, bookId, userId });
+    res.status(200).json(result);
+  }
 
   // static async updateReviewComment(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.updateReviewComment();

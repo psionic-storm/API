@@ -50,6 +50,13 @@ export interface UpdateReviewParams {
   reviewId: number;
 }
 
+export interface createReviewCommentParams {
+  comment: string;
+  reviewId: number;
+  bookId: number;
+  userId: number;
+}
+
 class SpaceRepo {
   static async findUserBySpaceId(spaceId: number): Promise<number> {
     const query = `
@@ -296,11 +303,15 @@ class SpaceRepo {
     return result;
   }
 
-  // static async createReviewComment(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async createReviewComment({ comment, reviewId, bookId, userId }: createReviewCommentParams): Promise<number> {
+    const query = `
+      INSERT INTO 
+        review_comment(comment, created_at, updated_at, review_id, review_book_id, user_id)
+      VALUES('${comment}', NOW(), NOW(), ${reviewId}, ${bookId}, ${userId})
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async updateReviewComment(): Promise<> {
   //   const query = ``;
