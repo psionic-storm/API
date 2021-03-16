@@ -2,6 +2,7 @@ import { Router } from 'express';
 import SpaceService from 'Service/space-service';
 import { validateBody } from 'Middlewares/validate-body';
 import { decodeJWT } from 'Middlewares/decode-jwt';
+import { checkPermission } from 'Middlewares/check-permission';
 
 const spaceRouter = Router();
 
@@ -13,6 +14,7 @@ spaceRouter.get('/:spaceId', SpaceService.getSpace);
 spaceRouter.patch(
   '/:spaceId',
   decodeJWT,
+  checkPermission,
   validateBody<UpdateSpaceBody>(['name']),
   SpaceService.updateSpace,
 );

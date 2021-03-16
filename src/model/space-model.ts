@@ -20,6 +20,19 @@ export interface Book {
 }
 
 class SpaceRepo {
+  static async findUserBySpaceId(spaceId: number): Promise<number> {
+    const query = `
+      SELECT
+        space.user_id
+      FROM
+        space
+      WHERE
+        space.id=${spaceId}
+    `;
+    const result = await queryExecutor(query);
+    return result[0];
+  }
+
   static async findOneSpace(spaceId: number): Promise<Space> {
     const query = `
       SELECT 

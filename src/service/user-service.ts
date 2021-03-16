@@ -8,7 +8,7 @@ export async function signUpByLoginId(req: Request, res: Response): Promise<void
 
   const user = await UserRepo.findByLoginId(loginId);
   if (user) {
-    res.status(409).json({ message: '이미 있는 아이디' });
+    res.status(409).json({ message: 'ID already exists' });
     return;
   }
 
