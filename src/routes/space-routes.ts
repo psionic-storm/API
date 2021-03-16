@@ -35,7 +35,7 @@ spaceRouter.post(
 );
 spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, checkPermission, SpaceService.deleteBook);
 
-// spaceRouter.post('/:spaceId/book/:bookId/review', SpaceService.addReview);
+spaceRouter.post('/:spaceId/book/:bookId/review', decodeJWT, checkPermission, SpaceService.addReview);
 // spaceRouter.patch('/:spaceId/book/:bookId/review/:reviewId', SpaceService.updateReview);
 // spaceRouter.delete('/:spaceId/book/:bookId/review/:reviewId', SpaceService.deleteReview);
 

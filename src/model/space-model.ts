@@ -196,11 +196,15 @@ class SpaceRepo {
     return result;
   }
 
-  // static async createReview(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async createReview({ title, content, bookId, userId }: any): Promise<any> {
+    const query = `
+      INSERT INTO 
+        review(title, content, created_at, updated_at, book_id, user_id)
+      VALUES('${title}', '${content}', NOW(), NOW(), ${bookId}, ${userId})
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async updateReview(): Promise<> {
   //   const query = ``;

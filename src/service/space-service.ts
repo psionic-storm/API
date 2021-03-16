@@ -46,10 +46,13 @@ class SpaceService {
     res.status(200).json({ messgage: 'no items to delete' });
   }
 
-  // static async addReview(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.createReview();
-  //   res.status(200).json(result);
-  // }
+  static async addReview(req: Request, res: Response): Promise<void> {
+    const bookId = parseInt(req.params.bookId);
+    const userId = parseInt((req.user as any).id);
+    const { title, content } = req.body;
+    const result = await SpaceRepo.createReview({ title, content, bookId, userId });
+    res.status(200).json(result);
+  }
 
   // static async updateReview(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.updateReview();
