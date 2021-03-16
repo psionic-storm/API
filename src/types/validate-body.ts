@@ -11,7 +11,6 @@ export interface SignInUserBody {
 }
 
 // space & salon
-
 export interface UpdateSpaceBody {
   name: string;
 }

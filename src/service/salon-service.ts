@@ -32,7 +32,6 @@ class SalonService {
     const book = await SalonRepo.findOneBook(bookId);
     const reviews = await SalonRepo.findAllReviewsInBook(bookId);
     const quotes = await SalonRepo.findAllQuotesInBook(bookId);
-    console.log(reviews);
     book.reviews = reviews;
     book.quotes = quotes;
     res.status(200).json(book);

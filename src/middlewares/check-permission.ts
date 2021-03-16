@@ -72,7 +72,6 @@ export async function checkPermission(req: Request, res: Response, next: NextFun
   if (req.params.salonId) {
     const salonId = parseInt(req.params.salonId);
     const { creator_id }: any = await SalonRepo.findUserBySalonId(salonId);
-    console.log(id);
     if (id !== creator_id) {
       res.status(401).json({ message: "Permission denied. It's not a salon you created" });
       return;

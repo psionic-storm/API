@@ -11,7 +11,6 @@ class SpaceService {
   }
 
   static async updateSpace(req: Request, res: Response): Promise<void> {
-    console.log(req.user);
     const spaceId = parseInt(req.params.spaceId);
     const { name } = req.body;
     await SpaceRepo.updateSpace({ spaceId, name });
@@ -23,7 +22,6 @@ class SpaceService {
     const book = await SpaceRepo.findOneBook(bookId);
     const reviews = await SpaceRepo.findAllReviewsInBook(bookId);
     const quotes = await SpaceRepo.findAllQuotesInBook(bookId);
-    console.log(reviews);
     book.reviews = reviews;
     book.quotes = quotes;
     res.status(200).json(book);
