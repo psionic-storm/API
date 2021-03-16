@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
-import SaloneRepo from 'Model/salon-model';
+import SalonRepo from 'Model/salon-model';
 
 class SalonService {
-  static async getsalon(req: Request, res: Response): Promise<void> {
+  static async getSalon(req: Request, res: Response): Promise<void> {
     const salonId = parseInt(req.params.salonId);
     const salon = await SalonRepo.findOnesalon(salonId);
-    const books = await SalonRepo.findAllBooksInsalon(salonId);
+    const books = await SalonRepo.findAllBooksInSalon(salonId);
     salon.books = books;
     res.status(200).json(salon);
   }
 
-  static async updatesalon(req: Request, res: Response): Promise<void> {
+  static async updateSalon(req: Request, res: Response): Promise<void> {
     console.log(req.user);
     const salonId = parseInt(req.params.salonId);
     const { name } = req.body;
-    await SalonRepo.updatesalon({ salonId, name });
+    await SalonRepo.updateSalon({ salonId, name });
     res.status(200).json({ message: 'modified successfully' });
   }
 
@@ -145,4 +145,4 @@ class SalonService {
   }
 }
 
-export default salonService;
+export default SalonService;

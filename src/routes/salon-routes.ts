@@ -10,7 +10,7 @@ export interface UpdateSalonBody {
   name: string;
 }
 
-salonRouter.get('/:salonId', SalonService.getsalon);
+salonRouter.get('/:salonId', SalonService.getSalon);
 salonRouter.patch(
   '/:salonId',
   decodeJWT,
