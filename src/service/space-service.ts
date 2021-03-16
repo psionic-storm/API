@@ -43,7 +43,7 @@ class SpaceService {
       res.status(200).json({ message: 'deleted successfully' });
       return;
     }
-    res.status(200).json({ messgage: 'no items to delete' });
+    res.status(200).json({ messgage: 'DB: no items to delete' });
   }
 
   static async addReview(req: Request, res: Response): Promise<void> {
@@ -68,13 +68,14 @@ class SpaceService {
       res.status(200).json({ message: 'deleted successfully' });
       return;
     }
-    res.status(200).json({ messgage: 'no items to delete' });
+    res.status(200).json({ messgage: 'DB: no items to delete' });
   }
 
-  // static async getAllReviewComments(req: Request, res: Response): Promise<void> {
-  //   const result = await SpaceRepo.findAllReviewComments();
-  //   res.status(200).json(result);
-  // }
+  static async getAllReviewComments(req: Request, res: Response): Promise<void> {
+    const reviewId = parseInt(req.params.reviewId);
+    const result = await SpaceRepo.findAllReviewComments(reviewId);
+    res.status(200).json(result);
+  }
 
   // static async addReviewComment(req: Request, res: Response): Promise<void> {
   //   const result = await SpaceRepo.createReviewComment();

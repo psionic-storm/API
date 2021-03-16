@@ -18,6 +18,14 @@ export interface Book {
   quotes?: Quote[];
 }
 
+export interface ReviewComment {
+  id: number;
+  comment: string;
+  created_at: string;
+  updated_at: string;
+  commenter: string;
+}
+
 export interface updateSpaceParams {
   name: string;
   spaceId: number;
@@ -267,11 +275,26 @@ class SpaceRepo {
     return result;
   }
 
-  // static async findAllReviewComments(): Promise<> {
-  //   const query = ``;
-  //   const result = await queryExecutor(query);
-  //   return result;
-  // }
+  static async findAllReviewComments(reviewId: number): Promise<ReviewComment[]> {
+    const query = `
+      SELECT 
+        review_comment.id id,
+        review_comment.comment comment,
+        review_comment.created_at created_at,
+        review_comment.updated_at updated_at,
+        user.nickname commenter
+      FROM
+        review_comment
+      JOIN
+        user 
+      ON 
+        review_comment.user_id=user.id
+      WHERE
+        review_comment.review_id=${reviewId}
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
 
   // static async createReviewComment(): Promise<> {
   //   const query = ``;
