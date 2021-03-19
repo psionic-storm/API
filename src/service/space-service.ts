@@ -41,7 +41,7 @@ class SpaceService {
       res.status(200).json({ message: 'deleted successfully' });
       return;
     }
-    res.status(200).json({ messgage: 'DB: no items to delete' });
+    res.status(200).json({ messgage: 'no items to delete' });
   }
 
   static async addReview(req: Request, res: Response): Promise<void> {

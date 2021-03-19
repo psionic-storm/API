@@ -5,11 +5,13 @@ import morgan from 'morgan';
 import passport from 'passport';
 import router from 'Routes/';
 import { errorHandler } from 'Middlewares/error-handler';
+import cors from 'cors';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
 
 app.use(morgan('dev'));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
