@@ -34,6 +34,7 @@ class SpaceRepo {
         space.name name, 
         user.id owner_id, 
         user.nickname owner_nickname 
+        user.login_id owner_loginId
       FROM 
         space
       JOIN 
