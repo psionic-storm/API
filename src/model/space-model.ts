@@ -15,11 +15,11 @@ import {
 import { Space, Book, Review, Quote, Comment } from 'Types/repository-return';
 
 class SpaceRepo {
-  static async createSpace({ userId, userName }: CreateSpaceParams): Promise<number> {
+  static async createSpace({ userNickname, userId }: CreateSpaceParams): Promise<number> {
     const query = `
       INSERT INTO
         space(name, created_at, updated_at, user_id)
-      VALUES("${userName}'s Space", NOW(), NOW(), ${userId})
+      VALUES("${userNickname}'s Space", NOW(), NOW(), ${userId})
     `;
     const result = await queryExecutor(query);
     return result;

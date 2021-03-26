@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import UserRepo from 'Model/user-model';
 import { createPasswordHash } from 'Utils/salt';
 import { createJWT } from 'Utils/jwt';
-import SpaceService from './space-service';
+import SpaceRepo from 'Model/space-model';
 
 export async function signUpByLoginId(req: Request, res: Response): Promise<void> {
   const { loginId, nickname, password } = req.body;
@@ -21,7 +21,7 @@ export async function signUpByLoginId(req: Request, res: Response): Promise<void
     hashedPasswordAndSalt,
   });
 
-  await SpaceService.addSp
+  await SpaceRepo.createSpace({ userNickname: nickname, userId: insertId });
 
   res.status(201).json(insertId);
 }

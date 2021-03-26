@@ -8,7 +8,7 @@ export interface CreateUserParams {
 // space & salon
 export interface CreateSpaceParams {
   userId: number;
-  userName: string;
+  userNickname: string;
 }
 
 export interface UpdateSpaceParams {
