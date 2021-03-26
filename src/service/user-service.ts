@@ -33,5 +33,7 @@ export async function signInByLoginId(req: Request, res: Response): Promise<void
 }
 
 export async function getCurrentUser(req: Request, res: Response): Promise<void> {
-  res.json(req.user);
+  const { id, login_id, nickname }: any = req.user;
+  const { spaceId } = await SpaceRepo.findSpaceByUserId(id);
+  res.status(200).json({ id, login_id, nickname, spaceId });
 }

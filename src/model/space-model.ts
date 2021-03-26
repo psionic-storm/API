@@ -59,6 +59,23 @@ class SpaceRepo {
     return result[0];
   }
 
+  static async findSpaceByUserId(userId: number): Promise<any> {
+    const query = `
+      SELECT 
+        space.id spaceId
+      FROM 
+        space
+      JOIN 
+        user 
+      ON
+        space.user_id=user.id
+      WHERE
+        user.id=${userId}
+    `;
+    const result = await queryExecutor(query);
+    return result[0];
+  }
+
   static async findAllBooksInSpace(spaceId: number): Promise<Book[]> {
     const query = `
       SELECT
