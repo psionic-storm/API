@@ -1,5 +1,6 @@
 import { queryExecutor } from 'Utils/query-executor';
 import {
+  CreateSpaceParams,
   UpdateSpaceParams,
   CreateBookParams,
   CreateReviewParams,
@@ -14,6 +15,16 @@ import {
 import { Space, Book, Review, Quote, Comment } from 'Types/repository-return';
 
 class SpaceRepo {
+  static async createSpace({ userId, userName }: CreateSpaceParams): Promise<number> {
+    const query = `
+      INSERT INTO
+        space(name, created_at, updated_at, user_id)
+      VALUES("${userName}'s Space", NOW(), NOW(), ${userId})
+    `;
+    const result = await queryExecutor(query);
+    return result;
+  }
+
   static async findUserBySpaceId(spaceId: number): Promise<number> {
     const query = `
       SELECT
@@ -33,7 +44,7 @@ class SpaceRepo {
         space.id id, 
         space.name name, 
         user.id owner_id, 
-        user.nickname owner_nickname 
+        user.nickname owner_nickname,
         user.login_id owner_loginId
       FROM 
         space

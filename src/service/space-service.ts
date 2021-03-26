@@ -2,8 +2,13 @@ import { Request, Response } from 'express';
 import SpaceRepo from 'Model/space-model';
 
 class SpaceService {
+  static async addSpace(req: Request, res: Response): Promise<void> {
+    res.status(200).json();
+  }
+
   static async getSpace(req: Request, res: Response): Promise<void> {
     const spaceId = parseInt(req.params.spaceId);
+    console.log(spaceId);
     const space = await SpaceRepo.findOneSpace(spaceId);
     const books = await SpaceRepo.findAllBooksInSpace(spaceId);
     space.books = books;

@@ -6,6 +6,11 @@ export interface CreateUserParams {
 }
 
 // space & salon
+export interface CreateSpaceParams {
+  userId: number;
+  userName: string;
+}
+
 export interface UpdateSpaceParams {
   name: string;
   spaceId: number;
