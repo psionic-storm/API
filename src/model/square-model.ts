@@ -7,7 +7,8 @@ class SquareRepo {
       SELECT
         review.id id, 
         review.title title, 
-        review.content content, 
+        review.content content,
+        user.id reviewer_id,
         user.nickname reviewer, 
         review.created_at created_at, 
         review.updated_at updated_at, 
@@ -46,6 +47,7 @@ class SquareRepo {
         quote.id id, 
         quote.content content, 
         quote.page page, 
+        user.id quoter_id, 
         user.nickname quoter, 
         quote.created_at created_at, 
         quote.updated_at updated_at, 
