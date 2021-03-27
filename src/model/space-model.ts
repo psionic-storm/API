@@ -82,7 +82,8 @@ class SpaceRepo {
         id, 
         title, 
         author, 
-        description
+        description,
+        thumbnail
       FROM
         book
       WHERE 
@@ -112,7 +113,8 @@ class SpaceRepo {
         id, 
         title, 
         author, 
-        description
+        description,
+        thumbnail
       FROM
         book
       WHERE 
@@ -133,6 +135,7 @@ class SpaceRepo {
         review.updated_at updated_at, 
         book.title book_title, 
         book.author book_author, 
+        book.thumbnail book_thumbnail, 
         salon.name salon, 
         space.name space 
       FROM 
@@ -171,6 +174,7 @@ class SpaceRepo {
         quote.updated_at updated_at, 
         book.title book_title, 
         book.author book_author, 
+        book.thumbnail book_thumbnail, 
         salon.name salon, 
         space.name space 
       FROM 
@@ -198,11 +202,11 @@ class SpaceRepo {
     return result;
   }
 
-  static async createBook({ title, author, description, spaceId }: CreateBookParams): Promise<number> {
+  static async createBook({ title, author, description, thumbnail, spaceId }: CreateBookParams): Promise<number> {
     const query = `
       INSERT INTO
-        book(title, author, description, created_at, space_id)
-      VALUES('${title}', '${author}', '${description}', NOW(), ${spaceId})
+        book(title, author, description, thumbnail, created_at, space_id)
+      VALUES('${title}', '${author}', '${description}', '${thumbnail}', NOW(), ${spaceId})
     `;
     const result = await queryExecutor(query);
     return result;

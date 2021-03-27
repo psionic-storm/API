@@ -93,6 +93,7 @@ class SalonRepo {
         id, 
         title, 
         author, 
+        thumbnail, 
         description
       FROM
         book
@@ -123,6 +124,7 @@ class SalonRepo {
         id, 
         title, 
         author, 
+        thumbnail, 
         description
       FROM
         book
@@ -144,6 +146,7 @@ class SalonRepo {
         review.updated_at updated_at, 
         book.title book_title, 
         book.author book_author, 
+        book.thumbnail book_thumbnail, 
         salon.name salon, 
         space.name space 
       FROM 
@@ -182,6 +185,7 @@ class SalonRepo {
         quote.updated_at updated_at, 
         book.title book_title, 
         book.author book_author, 
+        book.thumbnail book_thumbnail, 
         salon.name salon, 
         space.name space 
       FROM 
@@ -209,11 +213,11 @@ class SalonRepo {
     return result;
   }
 
-  static async createBook({ title, author, description, salonId }: CreateBookParams): Promise<number> {
+  static async createBook({ title, author, description, thumbnail, salonId }: CreateBookParams): Promise<number> {
     const query = `
       INSERT INTO
         book(title, author, description, created_at, salon_id)
-      VALUES('${title}', '${author}', '${description}', NOW(), ${salonId})
+      VALUES('${title}', '${author}', '${description}', '${thumbnail}', NOW(), ${salonId})
     `;
     const result = await queryExecutor(query);
     return result;

@@ -25,6 +25,7 @@ export interface AddBookBody {
   title: string;
   author: string;
   description: string;
+  thumbnail: string;
 }
 
 export interface AddReviewBody {

@@ -25,6 +25,7 @@ export interface Book {
   title: string;
   author: string;
   description: string;
+  thumbnail: string;
   reviews?: Review[];
   quotes?: Quote[];
 }
@@ -38,6 +39,7 @@ export interface Review {
   updated_at: string;
   book_title: string;
   book_author: string;
+  book_thumbnail: string;
   salon: string | null;
   space: string | null;
 }
@@ -51,6 +53,7 @@ export interface Quote {
   updated_at: string;
   book_title: string;
   book_author: string;
+  book_thumbnail: string;
   salon: string | null;
   space: string | null;
 }

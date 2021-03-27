@@ -40,7 +40,7 @@ salonRouter.post(
   '/:salonId/book',
   decodeJWT,
   checkPermission,
-  validateBody<AddBookBody>(['title', 'author', 'description']),
+  validateBody<AddBookBody>(['title', 'author', 'description', 'thumbnail']),
   SalonService.addBook,
 );
 salonRouter.delete('/:salonId/book/:bookId', decodeJWT, checkPermission, SalonService.deleteBook);

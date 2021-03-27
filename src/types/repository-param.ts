@@ -35,6 +35,7 @@ export interface CreateBookParams {
   title: string;
   author: string;
   description: string;
+  thumbnail: string;
   spaceId?: number;
   salonId?: number;
 }

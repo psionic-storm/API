@@ -39,8 +39,8 @@ class SalonService {
 
   static async addBook(req: Request, res: Response): Promise<void> {
     const salonId = parseInt(req.params.salonId);
-    const { title, author, description } = req.body;
-    const result = await SalonRepo.createBook({ title, author, description, salonId });
+    const { title, author, description, thumbnail } = req.body;
+    const result = await SalonRepo.createBook({ title, author, description, thumbnail, salonId });
     res.status(200).json(result);
   }
 

@@ -32,7 +32,7 @@ spaceRouter.post(
   '/:spaceId/book',
   decodeJWT,
   checkPermission,
-  validateBody<AddBookBody>(['title', 'author', 'description']),
+  validateBody<AddBookBody>(['title', 'author', 'description', 'thumbnail']),
   SpaceService.addBook,
 );
 spaceRouter.delete('/:spaceId/book/:bookId', decodeJWT, checkPermission, SpaceService.deleteBook);

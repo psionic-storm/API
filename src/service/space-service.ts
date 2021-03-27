@@ -34,8 +34,8 @@ class SpaceService {
 
   static async addBook(req: Request, res: Response): Promise<void> {
     const spaceId = parseInt(req.params.spaceId);
-    const { title, author, description } = req.body;
-    const result = await SpaceRepo.createBook({ title, author, description, spaceId });
+    const { title, author, description, thumbnail } = req.body;
+    const result = await SpaceRepo.createBook({ title, author, description, thumbnail, spaceId });
     res.status(200).json(result);
   }
 
