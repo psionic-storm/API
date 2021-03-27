@@ -98,7 +98,7 @@ class SpaceRepo {
       UPDATE
         space
       SET 
-        name='${name}',
+        name="${name}",
         updated_at=NOW()
       WHERE 
         id=${spaceId}
