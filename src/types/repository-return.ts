@@ -37,6 +37,7 @@ export interface Review {
   reviewer: string;
   created_at: string;
   updated_at: string;
+  review_comment_count: number;
   book_title: string;
   book_author: string;
   book_thumbnail: string;
@@ -51,6 +52,7 @@ export interface Quote {
   quoter: string;
   created_at: string;
   updated_at: string;
+  quote_comment_count: number;
   book_title: string;
   book_author: string;
   book_thumbnail: string;

@@ -133,6 +133,7 @@ class SpaceRepo {
         user.nickname reviewer, 
         review.created_at created_at, 
         review.updated_at updated_at, 
+        count(review_comment.comment) review_commment_count,
         book.title book_title, 
         book.author book_author, 
         book.thumbnail book_thumbnail, 
@@ -156,8 +157,14 @@ class SpaceRepo {
         space 
       ON 
         book.space_id=space.id
+      LEFT JOIN
+        review_comment
+      ON
+        review_comment.review_id=review.id
       WHERE
         review.book_id=${bookId}
+      GROUP BY
+        review.id
     `;
     const result = await queryExecutor(query);
     return result;
@@ -172,6 +179,7 @@ class SpaceRepo {
         user.nickname quoter, 
         quote.created_at created_at, 
         quote.updated_at updated_at, 
+        count(quote_comment.comment) quote_commment_count,
         book.title book_title, 
         book.author book_author, 
         book.thumbnail book_thumbnail, 
@@ -195,8 +203,14 @@ class SpaceRepo {
         space 
       ON 
         book.space_id=space.id
+      LEFT JOIN
+        quote_comment
+      ON
+        quote_comment.quote_id=quote.id
       WHERE
         quote.book_id=${bookId}
+      GROUP BY
+        review.id
   `;
     const result = await queryExecutor(query);
     return result;
