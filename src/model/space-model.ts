@@ -133,7 +133,7 @@ class SpaceRepo {
         user.nickname reviewer, 
         review.created_at created_at, 
         review.updated_at updated_at, 
-        count(review_comment.comment) review_commment_count,
+        COUNT(review_comment.comment) review_commment_count,
         book.title book_title, 
         book.author book_author, 
         book.thumbnail book_thumbnail, 
@@ -178,8 +178,8 @@ class SpaceRepo {
         quote.page page, 
         user.nickname quoter, 
         quote.created_at created_at, 
-        quote.updated_at updated_at, 
-        count(quote_comment.comment) quote_commment_count,
+        quote.updated_at updated_at,
+        COUNT(quote_comment.comment) quote_comment_count,
         book.title book_title, 
         book.author book_author, 
         book.thumbnail book_thumbnail, 
@@ -210,7 +210,14 @@ class SpaceRepo {
       WHERE
         quote.book_id=${bookId}
       GROUP BY
-        review.id
+        quote.id, 
+        quote.content, 
+        quote.page, 
+        user.nickname, 
+        quote.created_at, 
+        quote.updated_at,
+        salon.name, 
+        space.name  
   `;
     const result = await queryExecutor(query);
     return result;
