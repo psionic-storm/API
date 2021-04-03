@@ -133,7 +133,7 @@ class SpaceRepo {
         user.nickname reviewer, 
         review.created_at created_at, 
         review.updated_at updated_at, 
-        COUNT(review_comment.comment) review_commment_count,
+        COUNT(review_comment.comment) review_comment_count,
         book.title book_title, 
         book.author book_author, 
         book.thumbnail book_thumbnail, 
