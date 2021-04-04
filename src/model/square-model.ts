@@ -12,6 +12,7 @@ class SquareRepo {
         user.nickname reviewer, 
         review.created_at created_at, 
         review.updated_at updated_at, 
+        COUNT(review_comment.comment) review_comment_count,
         book.title book_title, 
         book.author book_author, 
         salon.name salon, 
@@ -34,6 +35,22 @@ class SquareRepo {
         space 
       ON 
         book.space_id=space.id
+      LEFT JOIN
+        review_comment
+      ON
+        review_comment.review_id=review.id
+      GROUP BY
+        review.id,
+        review.title, 
+        review.content, 
+        user.id,
+        book.title,
+        book.author,
+        user.nickname, 
+        review.created_at, 
+        review.updated_at,
+        salon.name, 
+        space.name  
       ORDER BY
         review.updated_at
     `;
@@ -73,6 +90,22 @@ class SquareRepo {
         space 
       ON 
         book.space_id=space.id
+        LEFT JOIN
+        quote_comment
+      ON
+        quote_comment.quote_id=quote.id
+      GROUP BY
+        quote.id,
+        quote.content, 
+        quote.page, 
+        user.id,
+        book.title,
+        book.author,
+        user.nickname, 
+        quote.created_at, 
+        quote.updated_at,
+        salon.name, 
+        space.name  
       ORDER BY
         quote.updated_at
     `;
