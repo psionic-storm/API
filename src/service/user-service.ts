@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import UserRepo from 'Model/user-model';
 import { createJWT } from 'Utils/jwt';
 import bcrypt from 'bcrypt';
-import { ERROR_JSON } from 'Constants';
+import { ERROR_JSON, STATUS_CODE } from 'Constants';
 
 export async function signUpWithEmail(req: Request, res: Response): Promise<void> {
   const { email, password } = req.body;
@@ -10,7 +10,7 @@ export async function signUpWithEmail(req: Request, res: Response): Promise<void
   const user = await UserRepo.findByEmail(email);
 
   if (user) {
-    res.status(409).json(ERROR_JSON.DUPLICATE_ID);
+    res.status(STATUS_CODE.CONFLICT).json(ERROR_JSON.DUPLICATE_ID);
     return;
   }
 
@@ -23,7 +23,7 @@ export async function signUpWithEmail(req: Request, res: Response): Promise<void
     password: hash,
   });
 
-  res.status(201).json(insertId);
+  res.status(STATUS_CODE.CREATED).json({ id: insertId, email, nickname });
 }
 
 export async function signInByLoginId(req: Request, res: Response): Promise<void> {

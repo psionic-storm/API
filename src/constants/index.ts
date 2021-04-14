@@ -4,6 +4,7 @@ export const ERROR_MSG = {
 
 export const STATUS_CODE = {
   OK: 200,
+  CREATED: 201,
   BAD_REQUEST: 400,
   NO_TOKEN: 401,
   NOT_FOUND: 404,
@@ -14,6 +15,6 @@ export const STATUS_CODE = {
 
 export const ERROR_JSON = {
   DUPLICATE_ID: {
-    errors: { code: STATUS_CODE.CONFLICT, message: ERROR_MSG.DUPLICATE_ID },
+    error: { status: STATUS_CODE.CONFLICT, message: ERROR_MSG.DUPLICATE_ID },
   },
 };
