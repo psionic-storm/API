@@ -22,12 +22,6 @@ userRouter.post(
   signInWithEmail,
 );
 
-// userRouter.get(
-//   '/signOut',
-//   validateBody<SignInUserBody>(['email', 'password']),
-//   passport.authenticate('local', { session: false }),
-//   signInByLoginId,
-// );
 
 userRouter.get('/', decodeJWT, isSignedIn, getCurrentUser);
 
