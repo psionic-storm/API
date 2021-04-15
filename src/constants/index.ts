@@ -8,17 +8,3 @@ export const STATUS_CODE = {
   CONFLICT: 409,
   SERVER_ERROR: 500,
 };
-
-export const ERROR_CODE = {
-  DUPLICATE_ID: 'duplicate_id',
-};
-
-export const ERROR_MSG = {
-  DUPLICATE_ID: 'ID already exists',
-};
-
-export const ERROR_JSON = {
-  DUPLICATE_ID: {
-    error: { status: ERROR_CODE.DUPLICATE_ID, message: ERROR_MSG.DUPLICATE_ID },
-  },
-};
