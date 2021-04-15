@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getCurrentUser, signUpWithEmail, signInByLoginId } from 'src/service/user-service';
+import { getCurrentUser, signUpWithEmail, signInWithEmail } from 'src/service/user-service';
 import { validateBody } from 'Middlewares/validate-body';
 import { decodeJWT } from 'Middlewares/decode-jwt';
 import passport from 'Utils/passport';
@@ -17,15 +17,15 @@ userRouter.post(
   '/signIn',
   validateBody<SignInUserBody>(['email', 'password']),
   passport.authenticate('local', { session: false }),
-  signInByLoginId,
+  signInWithEmail,
 );
 
-userRouter.get(
-  '/signOut',
-  validateBody<SignInUserBody>(['email', 'password']),
-  passport.authenticate('local', { session: false }),
-  signInByLoginId,
-);
+// userRouter.get(
+//   '/signOut',
+//   validateBody<SignInUserBody>(['email', 'password']),
+//   passport.authenticate('local', { session: false }),
+//   signInByLoginId,
+// );
 
 userRouter.get('/', decodeJWT, getCurrentUser);
 

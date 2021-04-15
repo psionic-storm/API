@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import UserRepo from 'Model/user-model';
 import { createJWT } from 'Utils/jwt';
 import bcrypt from 'bcrypt';
 import { ERROR_JSON, STATUS_CODE } from 'Constants';
+import { DuplicateIdError } from 'Errors/duplicate-id';
 
-export async function signUpWithEmail(req: Request, res: Response): Promise<void> {
+export async function signUpWithEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
   const { email, password } = req.body;
 
   const user = await UserRepo.findByEmail(email);
 
   if (user) {
-    res.status(STATUS_CODE.CONFLICT).json(ERROR_JSON.DUPLICATE_ID);
+    next(new DuplicateIdError());
     return;
   }
 
@@ -26,9 +27,9 @@ export async function signUpWithEmail(req: Request, res: Response): Promise<void
   res.status(STATUS_CODE.CREATED).json({ id: insertId, email, nickname });
 }
 
-export async function signInByLoginId(req: Request, res: Response): Promise<void> {
-  const { id, login_id, nickname }: any = req.user;
-  const accessToken = createJWT({ id, loginId: login_id, nickname });
+export async function signInWithEmail(req: Request, res: Response): Promise<void> {
+  const { id, email, nickname }: any = req.user;
+  const accessToken = createJWT({ id, email, nickname });
   res.status(200).json({ accessToken });
 }
 
