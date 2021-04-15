@@ -28,13 +28,12 @@ export async function signUpWithEmail(req: Request, res: Response, next: NextFun
 }
 
 export async function signInWithEmail(req: Request, res: Response): Promise<void> {
-  console.log(req.headers['authorization']);
   const { id, email, nickname }: any = req.user;
   const accessToken = createJWT({ id, email, nickname });
   res.status(200).json({ accessToken });
 }
 
 export async function getCurrentUser(req: Request, res: Response): Promise<void> {
-  const { id, login_id, nickname }: any = req.user;
-  res.status(200).json({ id, login_id, nickname });
+  const { id, email, nickname }: any = req.user;
+  res.status(200).json({ id, email, nickname });
 }
