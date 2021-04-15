@@ -1,3 +1,4 @@
+import { JWT_EXPIRATION_TIME } from 'Constants';
 import jwt from 'jsonwebtoken';
 
 export interface JWTKey {
@@ -7,7 +8,9 @@ export interface JWTKey {
 }
 
 export function createJWT({ id, email, nickname }: JWTKey): string {
-  return jwt.sign({ id, email, nickname }, process.env.JWT_SECRET || '');
+  return jwt.sign({ id, email, nickname }, process.env.JWT_SECRET || '', {
+    expiresIn: JWT_EXPIRATION_TIME,
+  });
 }
 
 export function verifyJWT(token: string): JWTKey | null {

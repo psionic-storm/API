@@ -30,7 +30,6 @@ export async function signUpWithEmail(req: Request, res: Response, next: NextFun
 export async function signInWithEmail(req: Request, res: Response): Promise<void> {
   const { id, email, nickname }: any = req.user;
   res.cookie('refreshToken', 'aslkdfjkldasjkldfjaslk');
-  res.cookie('aslkjdfla', '');
   const accessToken = createJWT({ id, email, nickname });
   res.status(200).json({ accessToken });
 }

@@ -8,3 +8,5 @@ export const STATUS_CODE = {
   CONFLICT: 409,
   SERVER_ERROR: 500,
 };
+
+export const JWT_EXPIRATION_TIME = 60 * 10; // seconds
