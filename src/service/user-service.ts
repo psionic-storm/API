@@ -3,7 +3,7 @@ import UserRepo from 'Model/user-model';
 import { createJWT } from 'Utils/jwt';
 import bcrypt from 'bcrypt';
 import { STATUS_CODE } from 'Constants';
-import { DuplicateIdError } from 'Errors/duplicate-id';
+import { DuplicateIdError } from 'Errors/authenticate-error';
 
 export async function signUpWithEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
   const { email, password } = req.body;

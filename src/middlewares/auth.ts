@@ -1,3 +1,4 @@
+import { AlreadySignedInError, AuthenticateError } from 'Errors/authenticate-error';
 import { NextFunction, Request, Response } from 'express';
 
 export function isSignedIn(req: Request, res: Response, next: NextFunction): void {
@@ -6,7 +7,7 @@ export function isSignedIn(req: Request, res: Response, next: NextFunction): voi
     next();
     return;
   }
-  res.status(403).json('로긴필요');
+  next(new AuthenticateError());
 }
 
 export function isNotSignedIn(req: Request, res: Response, next: NextFunction): void {
@@ -14,5 +15,5 @@ export function isNotSignedIn(req: Request, res: Response, next: NextFunction): 
     next();
     return;
   }
-  res.status(403).json('이미 로그인 되어 있음');
+  next(new AlreadySignedInError());
 }
