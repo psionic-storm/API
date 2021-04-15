@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import UserRepo from 'Model/user-model';
 import { createJWT } from 'Utils/jwt';
 import bcrypt from 'bcrypt';
-import { ERROR_JSON, STATUS_CODE } from 'Constants';
+import { STATUS_CODE } from 'Constants';
 import { DuplicateIdError } from 'Errors/duplicate-id';
 
 export async function signUpWithEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -28,6 +28,7 @@ export async function signUpWithEmail(req: Request, res: Response, next: NextFun
 }
 
 export async function signInWithEmail(req: Request, res: Response): Promise<void> {
+  console.log(req.headers['authorization']);
   const { id, email, nickname }: any = req.user;
   const accessToken = createJWT({ id, email, nickname });
   res.status(200).json({ accessToken });

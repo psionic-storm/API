@@ -8,7 +8,6 @@ class SpaceService {
 
   static async getSpace(req: Request, res: Response): Promise<void> {
     const spaceId = parseInt(req.params.spaceId);
-    console.log(spaceId);
     const space = await SpaceRepo.findOneSpace(spaceId);
     const books = await SpaceRepo.findAllBooksInSpace(spaceId);
     space.books = books;
