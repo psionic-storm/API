@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import UserRepo from 'Model/user-model';
-import { createJWT } from 'Utils/jwt';
+import { createJWT, createRefreshJWT } from 'Utils/jwt';
 import bcrypt from 'bcrypt';
 import { STATUS_CODE } from 'Constants';
 import { DuplicateIdError } from 'Errors/authenticate-error';
@@ -29,8 +29,9 @@ export async function signUpWithEmail(req: Request, res: Response, next: NextFun
 
 export async function signInWithEmail(req: Request, res: Response): Promise<void> {
   const { id, email, nickname }: any = req.user;
-  res.cookie('refreshToken', 'aslkdfjkldasjkldfjaslk');
   const accessToken = createJWT({ id, email, nickname });
+  const refreshToken = createRefreshJWT({ id, email, nickname });
+  res.cookie('refreshToken', refreshToken);
   res.status(200).json({ accessToken });
 }
 
