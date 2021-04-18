@@ -3,6 +3,7 @@ dotenv.config();
 import express from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
+import cookieParser from 'cookie-parser';
 import router from 'Routes/';
 import { errorHandler } from 'Middlewares/error-handler';
 import cors from 'cors';
@@ -12,6 +13,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

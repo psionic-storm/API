@@ -24,3 +24,11 @@ export function verifyJWT(token: string): JWTKey | null {
   }
   return verifyResult;
 }
+
+export function verifyRefreshJWT(token: string): JWTKey | null {
+  const verifyResult: any = jwt.verify(token, process.env.REFRESH_JWT_SECRET || '');
+  if (!verifyResult) {
+    return null;
+  }
+  return verifyResult;
+}

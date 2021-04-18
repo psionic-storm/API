@@ -35,6 +35,14 @@ export async function signInWithEmail(req: Request, res: Response): Promise<void
   res.status(200).json({ accessToken });
 }
 
+export async function refreshTokens(req: Request, res: Response): Promise<void> {
+  const { id, email, nickname }: any = req.user;
+  const accessToken = createJWT({ id, email, nickname });
+  const refreshToken = createRefreshJWT({ id, email, nickname });
+  res.cookie('refreshToken', refreshToken);
+  res.status(200).json({ accessToken });
+}
+
 export async function getCurrentUser(req: Request, res: Response): Promise<void> {
   const { id, email, nickname }: any = req.user;
   res.status(200).json({ id, email, nickname });

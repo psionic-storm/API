@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { getCurrentUser, signUpWithEmail, signInWithEmail } from 'src/service/user-service';
+import { getCurrentUser, signUpWithEmail, signInWithEmail, refreshTokens } from 'src/service/user-service';
 import { validateBody } from 'Middlewares/validate-body';
-import { decodeJWT } from 'Middlewares/decode-jwt';
+import { decodeJWT, decodeRefreshJWT } from 'Middlewares/decode-jwt';
 import { isSignedIn, isNotSignedIn } from 'Middlewares/auth';
 import passport from 'Utils/passport';
 import { SignUpUserBody, SignInUserBody } from 'Types/validate-body';
@@ -22,6 +22,7 @@ userRouter.post(
   signInWithEmail,
 );
 
+userRouter.post('/silentRefresh', decodeRefreshJWT, refreshTokens);
 
 userRouter.get('/', decodeJWT, isSignedIn, getCurrentUser);
 
