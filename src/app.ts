@@ -4,7 +4,7 @@ import express from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import router from 'Routes/';
+import router from 'Routes/index';
 import { errorHandler } from 'Middlewares/error-handler';
 import cors from 'cors';
 
