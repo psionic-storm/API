@@ -11,6 +11,20 @@ import cors from 'cors';
 const PORT = process.env.PORT || 4000;
 const app = express();
 
+const a = 3;
+const d = 3;
+
+var g = 3;
+
+// eslint is not working;
+const a: string = 3;
+
+g = d;
+d = 3;
+d = 1;
+c = 1;
+var gg = 13;
+
 app.use(morgan('dev'));
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
