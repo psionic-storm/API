@@ -10,6 +10,13 @@ import cors from 'cors';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
+const a = 1;
+const b = 3;
+const c = b;
+var d = 1;
+
+asdf = 3;
+d = 1;
 
 app.use(morgan('dev'));
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));

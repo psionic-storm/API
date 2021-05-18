@@ -1,9 +1,9 @@
-import { CustomError } from "Errors/custom-error";
+import { CustomError } from 'Errors/custom-error';
 
 export class InsufficientBodyError extends CustomError {
-	public statusCode = 400;
+  public statusCode = 400;
 
-	constructor(key: string) {
-		super(`[Insufficient]body should have [${key}] value`);
-	}
+  constructor(key: string) {
+    super(`[Insufficient]body should have [${key}] value`);
+  }
 }
