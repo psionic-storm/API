@@ -18,8 +18,8 @@ class UserRepo {
   static async createUser({ email, nickname, password }: CreateUserParams): Promise<number> {
     const query = `
       INSERT INTO 
-        user(email, nickname, password, created_at) 
-      VALUES('${email}', '${nickname}', '${password}', NOW())
+        user(email, nickname, password, created_at, updated_at) 
+      VALUES('${email}', '${nickname}', '${password}', NOW(), NOW())
     `;
     return await queryExecutor(query);
   }
