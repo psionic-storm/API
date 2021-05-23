@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import UserRepo from 'Model/user-model';
 import { createJWT, createRefreshJWT } from 'Utils/jwt';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { STATUS_CODE } from 'Constants';
 import { DuplicateIdError } from 'Errors/authenticate-error';
 
