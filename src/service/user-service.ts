@@ -24,7 +24,11 @@ export async function signUpWithEmail(req: Request, res: Response, next: NextFun
     password: hash,
   });
 
-  res.status(STATUS_CODE.CREATED).json({ id: insertId, email, nickname });
+  const accessToken = createJWT({ id: insertId, email, nickname });
+  const refreshToken = createRefreshJWT({ id: insertId, email, nickname });
+  res.cookie('refreshToken', refreshToken);
+
+  res.status(STATUS_CODE.CREATED).json({ id: insertId, email, nickname, accessToken });
 }
 
 export async function signInWithEmail(req: Request, res: Response): Promise<void> {
@@ -32,7 +36,9 @@ export async function signInWithEmail(req: Request, res: Response): Promise<void
   const accessToken = createJWT({ id, email, nickname });
   const refreshToken = createRefreshJWT({ id, email, nickname });
   res.cookie('refreshToken', refreshToken);
-  res.status(200).json({ accessToken });
+
+  const signInWithEmailResponse = { id, email, nickname, accessToken };
+  res.status(200).json(signInWithEmailResponse);
 }
 
 export async function refreshTokens(req: Request, res: Response): Promise<void> {
